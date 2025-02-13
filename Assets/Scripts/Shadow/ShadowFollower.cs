@@ -66,7 +66,7 @@ public class ShadowFollower : MonoBehaviour
             replayIndex = (replayIndex + 1) % maxStoredPositions;
             totalStored--;
 
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.1f);
         }
 
         isReplaying = false;
