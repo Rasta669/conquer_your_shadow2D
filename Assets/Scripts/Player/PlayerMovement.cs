@@ -122,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0) return; // Prevent movement if the game is paused
         if (!isDashing)
         {
             Move();

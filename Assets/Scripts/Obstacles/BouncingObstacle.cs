@@ -42,11 +42,13 @@ public class BouncingObstacle : MonoBehaviour
 
     void Start()
     {
+
         startPos = transform.position; // Store initial position
     }
 
     void Update()
     {
+        if (Time.timeScale == 0) return; // Prevent movement if the game is paused
         Bounce();
     }
 

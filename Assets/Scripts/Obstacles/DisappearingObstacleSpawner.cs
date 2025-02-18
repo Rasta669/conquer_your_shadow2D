@@ -19,6 +19,7 @@ public class DisappearingObstacleSpawner : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0) return; // Prevent movement if the game is paused
         if (player == null) return;
 
         float playerX = player.position.x;
@@ -37,4 +38,13 @@ public class DisappearingObstacleSpawner : MonoBehaviour
         GameObject obstacle = Instantiate(obstaclePrefab, spawnPosition, Quaternion.identity);
         Destroy(obstacle, despawnTime); // Make it disappear after some time
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Player hit obstacle!");
+        }
+    }
+
 }

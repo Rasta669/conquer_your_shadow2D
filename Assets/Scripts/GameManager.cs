@@ -1,79 +1,20 @@
-//using UnityEngine;
-//using UnityEngine.SceneManagement;
-
-//public class GameManager : MonoBehaviour
-//{
-//    public static GameManager Instance { get; private set; }
-//    private bool isPaused = false;
-
-//    void Awake()
-//    {
-//        if (Instance == null)
-//        {
-//            Instance = this;
-//            DontDestroyOnLoad(gameObject); // Keep across scenes
-//        }
-//        else
-//        {
-//            Destroy(gameObject);
-//        }
-//    }
-
-//    //void Awake()
-//    //{
-//    //    if (Instance == null)
-//    //    {
-//    //        GameObject obj = new GameObject("GameManager");
-//    //        Instance = obj.AddComponent<GameManager>();
-//    //        DontDestroyOnLoad(obj);
-//    //    }
-//    //}
-
-//    public void StartGame()
-//    {
-//        Debug.Log("Game Started!");
-//        SceneManager.LoadScene("GameScene"); // Replace with actual scene name
-//    }
-
-//    public void PauseGame()
-//    {
-//        isPaused = true;
-//        Time.timeScale = 0f; // Stop game time
-//        Debug.Log("Game Paused!");
-//    }
-
-//    public void ResumeGame()
-//    {
-//        isPaused = false;
-//        Time.timeScale = 1f; // Resume game time
-//        Debug.Log("Game Resumed!");
-//    }
-
-//    public void GameOver()
-//    {
-//        Debug.Log("Game Over! Restarting...");
-//        Time.timeScale = 0f; // Stop game time
-//        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-//    }
-//}
-
-using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    private bool isPaused = false;
-
-    public GameObject gameOverUI; // The Game Over UI panel
+    private bool isPaused = true; // Ensure game is paused at the start
+    public GameObject gameOverUI;
+    public GameObject mainMenuUI; // Reference to Main Menu UI
 
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Keep across scenes
-            Debug.Log("GameManager instance created"); // Add a debug log here to confirm it's set up
+            DontDestroyOnLoad(gameObject);
+            Debug.Log("GameManager instance created");
         }
         else
         {
@@ -81,53 +22,57 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        Time.timeScale = 0f; // Pause the game until StartGame is called
+        if (mainMenuUI != null)
+        {
+            mainMenuUI.SetActive(true); // Show main menu at the start
+        }
+    }
 
     public void StartGame()
     {
         Debug.Log("Game Started!");
-        // Normally, you would load your main game scene, but we skip that now
-    }
-
-    public void PauseGame()
-    {
-        isPaused = true;
-        Time.timeScale = 0f; // Stop game time
-        Debug.Log("Game Paused!");
-    }
-
-    public void ResumeGame()
-    {
+        Time.timeScale = 1f; // Resume time to start the game
         isPaused = false;
-        Time.timeScale = 1f; // Resume game time
-        Debug.Log("Game Resumed!");
+
+        if (mainMenuUI != null)
+        {
+            mainMenuUI.SetActive(false); // Hide the Main Menu
+        }
     }
 
     public void GameOver()
     {
-        Debug.Log("Game Over! Restarting...");
-        Time.timeScale = 0f; // Stop the game time
+        Debug.Log("Game Over!");
+        Time.timeScale = 0f; // Stop the game
         if (gameOverUI != null)
         {
-            gameOverUI.SetActive(true); // Show the Game Over UI
+            gameOverUI.SetActive(true);
         }
     }
 
     public void RestartGame()
     {
-        Time.timeScale = 1f; // Resume the time
+        Time.timeScale = 1f;
         if (gameOverUI != null)
         {
-            gameOverUI.SetActive(false); // Hide the Game Over UI
+            gameOverUI.SetActive(false);
         }
 
-        // Optionally, reset the game state, and load the current scene again
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene to restart game
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void QuitGame()
     {
-        // Optionally, quit the game (works in build, not in editor)
         Debug.Log("Quitting game...");
-        Application.Quit();
+        Application.Quit(); // Closes the application (only works in a built game)
+
+        // If running in the editor, stop play mode
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
+
 }
