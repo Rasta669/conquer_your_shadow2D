@@ -12,6 +12,8 @@ public class ShadowFollower : MonoBehaviour
 
     private bool isReplaying = false;
     private static GameManager gameManager; // Cache singleton reference
+    private CharacterAnimator characterAnimator; // Reference to the player's animator
+    private bool isDead = false; // To check if the player is dead
 
     private class MovementData
     {
@@ -26,6 +28,8 @@ public class ShadowFollower : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;
         gameManager = GameManager.Instance; // Cache reference to prevent GC
+        characterAnimator = FindObjectOfType<CharacterAnimator>(); // Find the CharacterAnimator in the scene
+
         for (int i = 0; i < maxStoredPositions; i++)
             movementHistory[i] = new MovementData(); // Preallocate objects
     }
@@ -74,36 +78,52 @@ public class ShadowFollower : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Trigger entered: " + other.gameObject.name);  // Add this line for debugging
+        Debug.Log("Trigger entered: " + other.gameObject.name);  // Debugging collision detection
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Game Over! Shadow caught the player.");
-            gameManager.GameOver(); // Use cached reference
+            Debug.Log("Game Over! Shadow caught the player."); // Debugging shadow-player collision
+            if (!isDead)
+            {
+                isDead = true;
+                characterAnimator.PlayDeathAnimation(); // Trigger the death animation
+                gameManager.GameOver(); // Call the Game Over method
+            }
         }
         if (other.CompareTag("Obstacle"))
         {
             Debug.Log("Game Over! Shadow hit an obstacle.");
-            gameManager.GameOver(); // Call the Game Over method
+            if (!isDead)
+            {
+                isDead = true;
+                characterAnimator.PlayDeathAnimation(); // Trigger the death animation
+                gameManager.GameOver(); // Call the Game Over method
+            }
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision entered: " + collision.gameObject.name);  // Add this line for debugging
+        Debug.Log("Collision entered: " + collision.gameObject.name);  // Debugging collision detection
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             Debug.Log("Game Over! Shadow hit an obstacle.");
-            gameManager.GameOver(); // Use cached reference
+            if (!isDead)
+            {
+                isDead = true;
+                characterAnimator.PlayDeathAnimation(); // Trigger the death animation
+                gameManager.GameOver(); // Call the Game Over method
+            }
         }
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Game Over! Shadow caught the player.");
-            gameManager.GameOver(); // Use cached reference
+            Debug.Log("Game Over! Shadow caught the player."); // Debugging shadow-player collision
+            if (!isDead)
+            {
+                isDead = true;
+                characterAnimator.PlayDeathAnimation(); // Trigger the death animation
+                gameManager.GameOver(); // Call the Game Over method
+            }
         }
     }
-
-   
-
-
 }
