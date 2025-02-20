@@ -106,6 +106,9 @@ public class MainMenuController : MonoBehaviour
     private VisualElement videoSettingsUI;
     private VisualElement settingsUI;
     private VisualElement graphicsUI;
+    private VisualElement achievemntsUI;
+    private VisualElement controllerUI;
+    private VisualElement instructionsUI;
 
     private UIDocument uiDocument;
 
@@ -123,11 +126,17 @@ public class MainMenuController : MonoBehaviour
         videoSettingsUI = root.Q<VisualElement>("VideoPage");
         settingsUI = root.Q<VisualElement>("VideoSettingsPage");
         graphicsUI = root.Q<VisualElement>("GraphicsPage");
+        achievemntsUI = root.Q<VisualElement>("AchievementsPage");
+        controllerUI = root.Q<VisualElement>("ControllerPage");
+        instructionsUI = root.Q<VisualElement>("InstructionsPage");
 
         Button startButton = mainMenu.Q<Button>("StartButton");
         Button optionsButton = mainMenu.Q<Button>("OptionsButton");
+        Button achievemntsButton = mainMenu.Q<Button>("AchievemntsButton");
         Button audioButton = optionsMenu.Q<Button>("AudioButton");
         Button videoButton = optionsMenu.Q<Button>("VideoButton");
+        Button controllerButton = optionsMenu.Q<Button>("ControllerButton");
+        Button instructionsButton = optionsMenu.Q<Button>("InstructionsButton");
         Button settingsButton = videoSettingsUI.Q<Button>("SettingslButton");
         Button graphicsButton = videoSettingsUI.Q<Button>("GraphicsButton");
         Button quitButton = mainMenu.Q<Button>("QuitButton");
@@ -137,17 +146,26 @@ public class MainMenuController : MonoBehaviour
         Button backButtonVS = videoSettingsUI.Q<Button>("BackButton");
         Button backButtonGs = graphicsUI.Q<Button>("BackButton");
         Button backButtonS = settingsUI.Q<Button>("BackButton");
+        Button backButtonAch = achievemntsUI.Q<Button>("BackButton");
+        Button backButtonInstr = instructionsUI.Q<Button>("BackButton");
+        Button backButtonContrll = controllerUI.Q<Button>("BackButton");
         Button RMMGO = gameOverMenu.Q<Button>("RmainMenuButton");
         Button RMMAud = audioSettingsUI.Q<Button>("RmainMenuButton");
         Button RMMVS = videoSettingsUI.Q<Button>("RmainMenuButton");
         Button RMMS = settingsUI.Q<Button>("RmainMenuButton");
         Button RMMPs = resumeMenu.Q<Button>("RmainMenuButton");
         Button RMMGs = graphicsUI.Q<Button>("RmainMenuButton");
+        //Button RMMAch = achievemntsUI.Q<Button>("RmainMenuButton");
+        Button RMMInstr = instructionsUI.Q<Button>("RmainMenuButton");
+        Button RMMContrll = controllerUI.Q<Button>("RmainMenuButton");
         RadioButton fullscreenRadioButton = videoSettingsUI.Q<RadioButton>("FullOrWindowed");
 
         startButton.clicked += StartGame;
         optionsButton.clicked += ShowOptions;
+        achievemntsButton.clicked += ShowAchievemntsUI;
         videoButton.clicked += OpenVideoSettings;
+        instructionsButton.clicked += ShowInstructionsUI;
+        controllerButton.clicked += ShowControllerUI;
         settingsButton.clicked += OpenSettingsPage;
         graphicsButton.clicked += OpenGraphicsPage;
         quitButton.clicked += QuitGame;
@@ -158,13 +176,18 @@ public class MainMenuController : MonoBehaviour
         backButtonVS.clicked += GoBack;
         backButtonS.clicked += GoBack;
         backButtonGs.clicked += GoBack;
+        backButtonAch.clicked += GoBack;
+        backButtonInstr.clicked += GoBack;
+        backButtonContrll.clicked += GoBack;
         RMMAud.clicked += ReturnToMainMenu;
         RMMS.clicked += ReturnToMainMenu;
         RMMGO.clicked += ReturnToMainMenu;
         RMMVS.clicked += ReturnToMainMenu;
-        RMMVS.clicked -= ReturnToMainMenu;
-        RMMPs.clicked -= ReturnToMainMenu;
-        RMMGs.clicked -= ReturnToMainMenu;
+        RMMVS.clicked += ReturnToMainMenu;
+        RMMPs.clicked += ReturnToMainMenu;
+        RMMGs.clicked += ReturnToMainMenu;
+        RMMInstr.clicked += ReturnToMainMenu;
+        RMMContrll.clicked += ReturnToMainMenu;
         //fullscreenRadioButton.clicked += () => ToggleFullscreen(!Screen.fullScreen);
 
         // Back button for the main menu to return to main page
@@ -225,5 +248,20 @@ public class MainMenuController : MonoBehaviour
     {
         Debug.Log("Returning to Main Menu...");
         GameManager.Instance.ShowMenu(mainMenu);
+    }
+
+    private void ShowAchievemntsUI()
+    {
+        GameManager.Instance.ShowAchievementsUI();
+    }
+
+    void ShowInstructionsUI()
+    {
+        GameManager.Instance.ShowInstructionsUi();
+    }
+
+    void ShowControllerUI()
+    {
+        GameManager.Instance.ShowControllerUI();
     }
 }

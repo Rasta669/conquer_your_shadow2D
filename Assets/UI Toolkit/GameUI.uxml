@@ -53,7 +53,7 @@
         <ui:Button text="Back" name="BackButton" class="button" style="top: 858px; width: 289px; right: auto; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; height: 76px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; translate: 839px -156px;" />
         <ui:Button text="Survival mode" name="SurvivalButton" class="button" style="top: 283px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 76px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px;" />
     </ui:VisualElement>
-    <ui:VisualElement name="VideoPage" enabled="true" class="basePage" style="flex-grow: 1; display: flex;">
+    <ui:VisualElement name="VideoPage" enabled="true" class="basePage" style="flex-grow: 1; display: none;">
         <ui:Label text="Video" name="VideoText" class="OptionHeader" style="height: 180px; font-size: 100px; top: 65px; display: flex; width: 1961px;">
             <ui:VisualElement name="OptUnderline" style="flex-grow: 1; height: 62px; top: 144px; width: 1308px; right: -357px; max-height: 4px; background-color: rgb(0, 0, 0);" />
             <ui:VisualElement name="OptUnderline2" style="top: 283px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 31px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px; background-color: rgb(0, 0, 0);" />
@@ -76,6 +76,32 @@
     </ui:VisualElement>
     <ui:VisualElement name="GraphicsPage" class="basePage" style="flex-grow: 1; display: none;">
         <ui:Label text="Graphics" name="GraphicsText" class="OptionHeader" style="height: 180px; font-size: 100px; top: 65px; display: flex; width: 1961px;">
+            <ui:VisualElement name="OptUnderline" style="flex-grow: 1; height: 46px; top: 144px; width: 1308px; right: -357px; max-height: 4px; background-color: rgb(0, 0, 0);" />
+            <ui:VisualElement name="OptUnderline2" style="top: 287px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 19px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px; background-color: rgb(0, 0, 0);" />
+        </ui:Label>
+        <ui:Label text="This page is under development" style="top: 90px; height: 213px; width: 1681px; right: -189px; font-size: 40px; color: rgb(176, 142, 142);" />
+        <ui:Button text="Back" name="BackButton" class="button" style="top: 708px; width: 289px; right: 239px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; height: 76px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; translate: 839px -156px;" />
+        <ui:Button text="Return to main menu" name="RmainMenuButton" class="button" style="top: 628px; width: 473px; right: -224px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; height: 76px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; translate: 839px -156px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="InstructionsPage" class="basePage" style="flex-grow: 1; display: none;">
+        <ui:Label text="Instructions" name="instrunctionsText" class="OptionHeader" style="height: 180px; font-size: 100px; top: 65px; display: flex; width: 1961px;">
+            <ui:VisualElement name="OptUnderline" style="flex-grow: 1; height: 46px; top: 144px; width: 1308px; right: -357px; max-height: 4px; background-color: rgb(0, 0, 0);" />
+            <ui:VisualElement name="OptUnderline2" style="top: 287px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 19px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px; background-color: rgb(0, 0, 0);" />
+        </ui:Label>
+        <ui:Label text="This page is under development" style="top: 90px; height: 213px; width: 1681px; right: -189px; font-size: 40px; color: rgb(176, 142, 142);" />
+        <ui:Button text="Back" name="BackButton" class="button" style="top: 708px; width: 289px; right: 239px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; height: 76px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; translate: 839px -156px;" />
+        <ui:Button text="Return to main menu" name="RmainMenuButton" class="button" style="top: 628px; width: 473px; right: -224px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; height: 76px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; translate: 839px -156px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="AchievementsPage" class="basePage" style="flex-grow: 1; display: none;">
+        <ui:Label text="Achievements" name="AchievementText" class="OptionHeader" style="height: 180px; font-size: 100px; top: 65px; display: flex; width: 1961px;">
+            <ui:VisualElement name="OptUnderline" style="flex-grow: 1; height: 46px; top: 144px; width: 1308px; right: -357px; max-height: 4px; background-color: rgb(0, 0, 0);" />
+            <ui:VisualElement name="OptUnderline2" style="top: 287px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 19px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px; background-color: rgb(0, 0, 0);" />
+        </ui:Label>
+        <ui:Label text="This page is under development" style="top: 90px; height: 213px; width: 1681px; right: -189px; font-size: 40px; color: rgb(176, 142, 142);" />
+        <ui:Button text="Back" name="BackButton" class="button" style="top: 708px; width: 289px; right: -17px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; height: 76px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; translate: 839px -156px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="ControllerPage" class="basePage" style="flex-grow: 1; display: none;">
+        <ui:Label text="Controller" name="ControllerText" class="OptionHeader" style="height: 180px; font-size: 100px; top: 65px; display: flex; width: 1961px;">
             <ui:VisualElement name="OptUnderline" style="flex-grow: 1; height: 46px; top: 144px; width: 1308px; right: -357px; max-height: 4px; background-color: rgb(0, 0, 0);" />
             <ui:VisualElement name="OptUnderline2" style="top: 287px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 19px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px; background-color: rgb(0, 0, 0);" />
         </ui:Label>
