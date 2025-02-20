@@ -1,3 +1,4 @@
+//using System.Collections.Generic;
 //using UnityEngine;
 //using UnityEngine.SceneManagement;
 //using UnityEngine.UIElements;
@@ -7,10 +8,25 @@
 //    public static GameManager Instance { get; private set; }
 
 //    private bool isPaused = false;
+//    private bool isGameOver = false;
 //    private UIDocument uiDocument;
+
+//    // UI Elements
+//    private VisualElement mainMenuUI;
+//    private VisualElement optionsMenuUI;
 //    private VisualElement pauseMenuUI;
 //    private VisualElement resumeMenuUI;
-//    private VisualElement mainMenuUI;
+//    private VisualElement gameOverUI;
+//    private VisualElement audioSettingsUI;
+//    private VisualElement videoSettingsUI;
+//    private VisualElement settingsUI;
+//    private VisualElement graphicsUI;
+
+//    private Slider contrastSlider;
+//    private Slider brightnessSlider;
+//    private RadioButton fullscreenRadioButton;
+
+//    private Stack<VisualElement> menuHistory = new Stack<VisualElement>(); // Track menu navigation
 
 //    void Awake()
 //    {
@@ -18,6 +34,7 @@
 //        {
 //            Instance = this;
 //            DontDestroyOnLoad(gameObject);
+//            SceneManager.sceneLoaded += OnSceneLoaded;
 //        }
 //        else
 //        {
@@ -25,28 +42,60 @@
 //        }
 //    }
 
-//    private void OnEnable()
+//    private void OnDestroy()
+//    {
+//        SceneManager.sceneLoaded -= OnSceneLoaded;
+//    }
+
+//    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 //    {
 //        uiDocument = FindObjectOfType<UIDocument>();
 //        if (uiDocument == null)
 //        {
-//            Debug.LogError("UIDocument not found!");
+//            Debug.LogError("UIDocument not found on scene load!");
 //            return;
 //        }
 
 //        var root = uiDocument.rootVisualElement;
+//        mainMenuUI = root.Q<VisualElement>("CQYS_startPage");
+//        optionsMenuUI = root.Q<VisualElement>("OptionsPage");
+//        pauseMenuUI = root.Q<VisualElement>("PauseMENU");
+//        resumeMenuUI = root.Q<VisualElement>("ResumeMenu");
+//        gameOverUI = root.Q<VisualElement>("GameOverMenu");
+//        audioSettingsUI = root.Q<VisualElement>("AudioPage");
+//        videoSettingsUI = root.Q<VisualElement>("VideoPage");
+//        settingsUI = root.Q<VisualElement>("VideoSettingsPage");
+//        graphicsUI = root.Q<VisualElement>("GraphicsPage");
 
-//        // Assign UI Elements
-//        mainMenuUI = root.Q<VisualElement>("CQYS_startPage"); // Main Menu
-//        pauseMenuUI = root.Q<VisualElement>("PauseMENU"); // Pause button is inside this
-//        resumeMenuUI = root.Q<VisualElement>("ResumeMenu"); // This should pop up when paused
+//        contrastSlider = settingsUI.Q<Slider>("Contrast");
+//        brightnessSlider = settingsUI.Q<Slider>("Brightness");
+//        fullscreenRadioButton = videoSettingsUI.Q<RadioButton>("Fullscreen");
 
-//        // Ensure correct visibility at start
-//        mainMenuUI.style.display = DisplayStyle.Flex; // Show Main Menu at start
-//        pauseMenuUI.style.display = DisplayStyle.None; // Hide Pause button
-//        resumeMenuUI.style.display = DisplayStyle.None; // Hide Resume Menu
+//        if (contrastSlider != null) contrastSlider.RegisterValueChangedCallback(evt => AdjustContrast(evt.newValue));
+//        if (brightnessSlider != null) brightnessSlider.RegisterValueChangedCallback(evt => AdjustBrightness(evt.newValue));
+//        if (fullscreenRadioButton != null) fullscreenRadioButton.RegisterValueChangedCallback(evt => ToggleFullscreen(evt.newValue));
 
-//        Time.timeScale = 0f; // Game starts paused
+//        ResetUI();
+
+//        Time.timeScale = 0f; // Start paused
+//        isPaused = true;
+//        isGameOver = false;
+//    }
+
+//    private void ResetUI()
+//    {
+//        if (mainMenuUI != null) mainMenuUI.style.display = DisplayStyle.Flex;
+//        if (optionsMenuUI != null) optionsMenuUI.style.display = DisplayStyle.None;
+//        if (pauseMenuUI != null) pauseMenuUI.style.display = DisplayStyle.None;
+//        if (resumeMenuUI != null) resumeMenuUI.style.display = DisplayStyle.None;
+//        if (gameOverUI != null) gameOverUI.style.display = DisplayStyle.None;
+//        if (audioSettingsUI != null) audioSettingsUI.style.display = DisplayStyle.None;
+//        if (videoSettingsUI != null) videoSettingsUI.style.display = DisplayStyle.None;
+//        if (settingsUI != null) settingsUI.style.display = DisplayStyle.None;
+//        if (graphicsUI != null) graphicsUI.style.display = DisplayStyle.None;
+
+//        menuHistory.Clear();
+//        menuHistory.Push(mainMenuUI); // Start from the main menu
 //    }
 
 //    public void StartGame()
@@ -54,56 +103,77 @@
 //        Debug.Log("Game Started!");
 //        Time.timeScale = 1f;
 //        isPaused = false;
-
-//        // Hide Main Menu, show Pause button
-//        mainMenuUI.style.display = DisplayStyle.None;
-//        pauseMenuUI.style.display = DisplayStyle.Flex;
-//        resumeMenuUI.style.display = DisplayStyle.None;
-//    }
-
-//    public void PauseGame()
-//    {
-//        if (!isPaused)
-//        {
-//            Time.timeScale = 0f;
-//            isPaused = true;
-
-//            // Hide Pause Button, Show Resume Menu
-//            pauseMenuUI.style.display = DisplayStyle.None;
-//            resumeMenuUI.style.display = DisplayStyle.Flex;
-//        }
-//    }
-
-//    public void ResumeGame()
-//    {
-//        if (isPaused)
-//        {
-//            Time.timeScale = 1f;
-//            isPaused = false;
-
-//            // Show Pause Button, Hide Resume Menu
-//            pauseMenuUI.style.display = DisplayStyle.Flex;
-//            resumeMenuUI.style.display = DisplayStyle.None;
-//        }
-//    }
-
-//    public void RestartGame()
-//    {
-//        Time.timeScale = 1f;
-//        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+//        isGameOver = false;
+//        ShowMenu(null); // Hide all menus
 //    }
 
 //    public void QuitGame()
 //    {
+//        Debug.Log("Quitting Game...");
 //        Application.Quit();
-
 //#if UNITY_EDITOR
 //        UnityEditor.EditorApplication.isPlaying = false;
 //#endif
 //    }
+
+//    public void GameOver()
+//    {
+//        Debug.Log("Game Over!");
+//        isGameOver = true;
+//        Time.timeScale = 0f;
+//        ShowMenu(gameOverUI);
+//    }
+
+//    public void RestartGame()
+//    {
+//        Debug.Log("Restarting Game...");
+//        Time.timeScale = 1f;
+//        ResetUI();
+//        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+//    }
+
+//    public void ShowMenu(VisualElement menu)
+//    {
+//        if (menuHistory.Count > 0)
+//            menuHistory.Peek().style.display = DisplayStyle.None; // Hide current menu
+
+//        if (menu != null)
+//        {
+//            menu.style.display = DisplayStyle.Flex;
+//            menuHistory.Push(menu);
+//            Time.timeScale = 0f; // Pause while in menus
+//        }
+//        else
+//        {
+//            menuHistory.Clear();
+//            Time.timeScale = 1f; // Resume game when no menus are open
+//        }
+//    }
+
+//    public void ShowVideoSettings() => ShowMenu(videoSettingsUI);
+//    public void ShowSettingsPage() => ShowMenu(settingsUI);
+//    public void ShowGraphicsPage() => ShowMenu(graphicsUI);
+//    public void ShowAudioSettings() => ShowMenu(audioSettingsUI); // Add this method
+
+//    public void Back() // Add back functionality
+//    {
+//        if (menuHistory.Count > 1) // Ensure there's a previous menu
+//        {
+//            VisualElement currentMenu = menuHistory.Pop();
+//            currentMenu.style.display = DisplayStyle.None; // Hide current menu
+//            VisualElement previousMenu = menuHistory.Peek();
+//            previousMenu.style.display = DisplayStyle.Flex; // Show previous menu
+//            Debug.Log("Returning to previous menu: " + previousMenu.name);
+//        }
+//    }
+
+//    public void AdjustContrast(float value) => RenderSettings.ambientIntensity = value;
+//    public void AdjustBrightness(float value) => RenderSettings.ambientLight = new Color(value, value, value);
+//    public void ToggleFullscreen(bool isFullscreen) => Screen.fullScreen = isFullscreen;
 //}
 
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -113,11 +183,25 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     private bool isPaused = false;
+    private bool isGameOver = false;
     private UIDocument uiDocument;
+
+    // UI Elements
+    private VisualElement mainMenuUI;
+    private VisualElement optionsMenuUI;
     private VisualElement pauseMenuUI;
     private VisualElement resumeMenuUI;
-    private VisualElement mainMenuUI;
     private VisualElement gameOverUI;
+    private VisualElement audioSettingsUI;
+    private VisualElement videoSettingsUI;
+    private VisualElement settingsUI;
+    private VisualElement graphicsUI;
+
+    private Slider contrastSlider;
+    private Slider brightnessSlider;
+    private RadioButton fullscreenRadioButton;
+
+    private Stack<VisualElement> menuHistory = new Stack<VisualElement>(); // Track menu navigation
 
     void Awake()
     {
@@ -125,6 +209,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -132,30 +217,67 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         uiDocument = FindObjectOfType<UIDocument>();
         if (uiDocument == null)
         {
-            Debug.LogError("UIDocument not found!");
+            Debug.LogError("UIDocument not found on scene load!");
             return;
         }
 
         var root = uiDocument.rootVisualElement;
+        mainMenuUI = root.Q<VisualElement>("CQYS_startPage");
+        optionsMenuUI = root.Q<VisualElement>("OptionsPage");
+        pauseMenuUI = root.Q<VisualElement>("PauseMENU");
+        resumeMenuUI = root.Q<VisualElement>("ResumeMenu");
+        gameOverUI = root.Q<VisualElement>("GameOverMenu");
+        audioSettingsUI = root.Q<VisualElement>("AudioPage");
+        videoSettingsUI = root.Q<VisualElement>("VideoPage");
+        settingsUI = root.Q<VisualElement>("VideoSettingsPage");
+        graphicsUI = root.Q<VisualElement>("GraphicsPage");
 
-        // Assign UI Elements
-        mainMenuUI = root.Q<VisualElement>("CQYS_startPage"); // Main Menu
-        pauseMenuUI = root.Q<VisualElement>("PauseMENU"); // Pause button UI
-        resumeMenuUI = root.Q<VisualElement>("ResumeMenu"); // Resume Menu
-        gameOverUI = root.Q<VisualElement>("GameOverMenu"); // Game Over UI
+        contrastSlider = settingsUI.Q<Slider>("Contrast");
+        brightnessSlider = settingsUI.Q<Slider>("Brightness");
+        fullscreenRadioButton = videoSettingsUI.Q<RadioButton>("Fullscreen");
 
-        // Ensure correct visibility at start
-        mainMenuUI.style.display = DisplayStyle.Flex; // Show Main Menu
-        pauseMenuUI.style.display = DisplayStyle.None; // Hide Pause button
-        resumeMenuUI.style.display = DisplayStyle.None; // Hide Resume Menu
-        gameOverUI.style.display = DisplayStyle.None; // Hide Game Over UI
 
-        Time.timeScale = 0f; // Game starts paused
+
+        if (contrastSlider != null) contrastSlider.RegisterValueChangedCallback(evt => AdjustContrast(evt.newValue));
+        if (brightnessSlider != null) brightnessSlider.RegisterValueChangedCallback(evt => AdjustBrightness(evt.newValue));
+        if (fullscreenRadioButton != null) fullscreenRadioButton.RegisterValueChangedCallback(evt => ToggleFullscreen(evt.newValue));
+
+        // Back button handling
+        Button backButton = settingsUI.Q<Button>("BackButton");
+        if (backButton != null)
+            backButton.clicked += Back;
+
+        ResetUI();
+
+        Time.timeScale = 0f; // Start paused
+        isPaused = true;
+        isGameOver = false;
+    }
+
+    private void ResetUI()
+    {
+        if (mainMenuUI != null) mainMenuUI.style.display = DisplayStyle.Flex;
+        if (optionsMenuUI != null) optionsMenuUI.style.display = DisplayStyle.None;
+        if (pauseMenuUI != null) pauseMenuUI.style.display = DisplayStyle.None;
+        if (resumeMenuUI != null) resumeMenuUI.style.display = DisplayStyle.None;
+        if (gameOverUI != null) gameOverUI.style.display = DisplayStyle.None;
+        if (audioSettingsUI != null) audioSettingsUI.style.display = DisplayStyle.None;
+        if (videoSettingsUI != null) videoSettingsUI.style.display = DisplayStyle.None;
+        if (settingsUI != null) settingsUI.style.display = DisplayStyle.None;
+        if (graphicsUI != null) graphicsUI.style.display = DisplayStyle.None;
+
+        menuHistory.Clear();
+        menuHistory.Push(mainMenuUI); // Start from the main menu
     }
 
     public void StartGame()
@@ -163,64 +285,96 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Started!");
         Time.timeScale = 1f;
         isPaused = false;
-
-        // Hide Main Menu, Show Pause Button
-        mainMenuUI.style.display = DisplayStyle.None;
-        pauseMenuUI.style.display = DisplayStyle.Flex;
-        resumeMenuUI.style.display = DisplayStyle.None;
-        gameOverUI.style.display = DisplayStyle.None;
+        isGameOver = false;
+        ShowMenu(null); // Hide all menus
     }
 
-    public void PauseGame()
+    public void QuitGame()
     {
-        if (!isPaused)
-        {
-            Time.timeScale = 0f;
-            isPaused = true;
-
-            // Hide Pause Button, Show Resume Menu
-            pauseMenuUI.style.display = DisplayStyle.None;
-            resumeMenuUI.style.display = DisplayStyle.Flex;
-        }
-    }
-
-    public void ResumeGame()
-    {
-        if (isPaused)
-        {
-            Time.timeScale = 1f;
-            isPaused = false;
-
-            // Show Pause Button, Hide Resume Menu
-            pauseMenuUI.style.display = DisplayStyle.Flex;
-            resumeMenuUI.style.display = DisplayStyle.None;
-        }
+        Debug.Log("Quitting Game...");
+        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     public void GameOver()
     {
         Debug.Log("Game Over!");
+        isGameOver = true;
         Time.timeScale = 0f;
-
-        // Show Game Over Screen, Hide Other Menus
-        gameOverUI.style.display = DisplayStyle.Flex;
-        pauseMenuUI.style.display = DisplayStyle.None;
-        resumeMenuUI.style.display = DisplayStyle.None;
+        ShowMenu(gameOverUI);
     }
 
     public void RestartGame()
     {
+        Debug.Log("Restarting Game...");
         Time.timeScale = 1f;
-        gameOverUI.style.display = DisplayStyle.None;
+        ResetUI();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void QuitGame()
+    public void ShowMenu(VisualElement menu)
     {
-        Application.Quit();
+        if (menuHistory.Count > 0)
+            menuHistory.Peek().style.display = DisplayStyle.None; // Hide current menu
 
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
+        if (menu != null)
+        {
+            menu.style.display = DisplayStyle.Flex;
+            menuHistory.Push(menu);
+            Time.timeScale = 0f; // Pause while in menus
+        }
+        else
+        {
+            menuHistory.Clear();
+            Time.timeScale = 1f; // Resume game when no menus are open
+        }
     }
+
+    public void ShowVideoSettings() => ShowMenu(videoSettingsUI);
+    public void ShowSettingsPage() => ShowMenu(settingsUI);
+    public void ShowGraphicsPage() => ShowMenu(graphicsUI);
+    public void ShowAudioSettings() => ShowMenu(audioSettingsUI); // Add this method
+
+    public void Back() // Add back functionality
+    {
+        if (menuHistory.Count > 1) // Ensure there's a previous menu
+        {
+            VisualElement currentMenu = menuHistory.Pop();
+            currentMenu.style.display = DisplayStyle.None; // Hide current menu
+            VisualElement previousMenu = menuHistory.Peek();
+            previousMenu.style.display = DisplayStyle.Flex; // Show previous menu
+            Debug.Log("Returning to previous menu: " + previousMenu.name);
+        }
+        else
+        {
+            // If there's no previous menu, return to the main menu
+            ShowMenu(mainMenuUI);
+        }
+    }
+
+    public void AdjustContrast(float value) => RenderSettings.ambientIntensity = value;
+    public void AdjustBrightness(float value) => RenderSettings.ambientLight = new Color(value, value, value);
+    public void ToggleFullscreen(bool isFullscreen)
+    {
+        Debug.Log("ToggleFullscreen called! New State: " + isFullscreen); // Confirm method is called
+
+        if (isFullscreen)
+        {
+            Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+            Screen.SetResolution(1920, 1080, true);
+        }
+        else
+        {
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+            Screen.SetResolution(1280, 720, false);
+        }
+
+        Debug.Log($"Fullscreen: {Screen.fullScreen}, Mode: {Screen.fullScreenMode}, Resolution: {Screen.currentResolution.width}x{Screen.currentResolution.height}");
+    }
+
+
+
+
 }

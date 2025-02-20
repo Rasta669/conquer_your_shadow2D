@@ -1,68 +1,3 @@
-////using UnityEngine;
-////using UnityEngine.UIElements;
-
-////public class MainMenuController : MonoBehaviour
-////{
-////    private VisualElement mainMenu;
-////    private VisualElement optionsMenu;
-////    private UIDocument uiDocument;
-////    private VisualElement pauseMenu;
-
-////    private void OnEnable()
-////    {
-////        uiDocument = GetComponent<UIDocument>();
-////        var root = uiDocument.rootVisualElement;
-
-////        // Get UI Elements
-////        mainMenu = root.Q<VisualElement>("CQYS_startPage");
-////        optionsMenu = root.Q<VisualElement>("OptionsPage");
-////        pauseMenu = root.Q<VisualElement>("PauseMENU");
-
-////        Button startButton = root.Q<Button>("StartButton");
-////        Button optionsButton = root.Q<Button>("OptionsButton");
-////        Button quitButton = root.Q<Button>("QuitButton");
-////        Button backButton = root.Q<Button>("BackButton");
-
-////        // Assign button event handlers
-////        startButton.clicked += StartGame;
-////        optionsButton.clicked += ShowOptions;
-////        quitButton.clicked += QuitGame;
-////        backButton.clicked += ShowMainMenu;
-
-////        // Ensure correct visibility at start
-////        mainMenu.style.display = DisplayStyle.Flex;
-////        pauseMenu.style.display = DisplayStyle.None;
-////        optionsMenu.style.display = DisplayStyle.None;
-////    }
-
-////    private void StartGame()
-////    {
-////        mainMenu.style.display = DisplayStyle.None; // Hide the main menu
-////        pauseMenu.style.display = DisplayStyle.Flex;
-////        GameManager.Instance.StartGame(); // Start the game
-////    }
-
-////    private void ShowOptions()
-////    {
-////        mainMenu.style.display = DisplayStyle.None;
-////        pauseMenu.style.display = DisplayStyle.None;
-////        optionsMenu.style.display = DisplayStyle.Flex;
-////    }
-
-////    private void ShowMainMenu()
-////    {
-////        mainMenu.style.display = DisplayStyle.Flex;
-////        pauseMenu.style.display = DisplayStyle.None;
-////        optionsMenu.style.display = DisplayStyle.None;
-////    }
-
-////    private void QuitGame()
-////    {
-////        GameManager.Instance.QuitGame();
-////    }
-////}
-
-
 //using UnityEngine;
 //using UnityEngine.UIElements;
 
@@ -70,163 +5,91 @@
 //{
 //    private VisualElement mainMenu;
 //    private VisualElement optionsMenu;
-//    private UIDocument uiDocument;
 //    private VisualElement pauseMenu;
-//    private Label scoreLabel; // To show the score on the pause menu
+//    private VisualElement resumeMenu;
+//    private VisualElement gameOverMenu;
+//    private VisualElement audioSettingsUI;
+//    private VisualElement videoSettingsUI;
+//    private VisualElement settingsUI;
+//    private VisualElement graphicsUI;
+
+//    private UIDocument uiDocument;
 
 //    private void OnEnable()
 //    {
 //        uiDocument = GetComponent<UIDocument>();
 //        var root = uiDocument.rootVisualElement;
 
-//        // Get UI Elements
 //        mainMenu = root.Q<VisualElement>("CQYS_startPage");
 //        optionsMenu = root.Q<VisualElement>("OptionsPage");
 //        pauseMenu = root.Q<VisualElement>("PauseMENU");
-//        scoreLabel = pauseMenu.Q<Label>("ScoreLabel"); // Assuming "ScoreLabel" is the name of your score element
+//        resumeMenu = root.Q<VisualElement>("ResumeMenu");
+//        gameOverMenu = root.Q<VisualElement>("GameOverMenu");
+//        audioSettingsUI = root.Q<VisualElement>("AudioPage");
+//        videoSettingsUI = root.Q<VisualElement>("VideoPage");
+//        settingsUI = root.Q<VisualElement>("VideoSettingsPage");
+//        graphicsUI = root.Q<VisualElement>("GraphicsPage");
 
-//        Button startButton = root.Q<Button>("StartButton");
-//        Button optionsButton = root.Q<Button>("OptionsButton");
-//        Button quitButton = root.Q<Button>("QuitButton");
-//        Button backButton = root.Q<Button>("BackButton");
-//        Button resumeButton = pauseMenu.Q<Button>("ResumeButton"); // Assuming you have a Resume button in the pause menu
-//        Button pauseButton = pauseMenu.Q<Button>("PauseButton");
+//        Button startButton = mainMenu.Q<Button>("StartButton");
+//        Button optionsButton = mainMenu.Q<Button>("OptionsButton");
+//        Button audioButton = optionsMenu.Q<Button>("AudioButton"); // Added audio settings button
+//        Button videoButton = optionsMenu.Q<Button>("VideoButton");
+//        Button settingsButton = videoSettingsUI.Q<Button>("SettingslButton");
+//        Button graphicsButton = videoSettingsUI.Q<Button>("GraphicsButton");
+//        Button backButton = root.Q<Button>("BackButton"); // Back button for navigation
+//        Button returnToMainMenuButton = root.Q<Button>("RmainMenuButton"); // Return to main menu
+//        Button quitButton = mainMenu.Q<Button>("QuitButton");
+//        RadioButton fullscreenRadioButton = videoSettingsUI.Q<RadioButton>("Fullscreen");
 
-//        // Assign button event handlers
 //        startButton.clicked += StartGame;
 //        optionsButton.clicked += ShowOptions;
+//        audioButton.clicked += OpenAudioSettings; // Linked audio settings
+//        videoButton.clicked += OpenVideoSettings;
+//        settingsButton.clicked += OpenSettingsPage;
+//        graphicsButton.clicked += OpenGraphicsPage;
+//        backButton.clicked += GoBack; // Back button function
+//        returnToMainMenuButton.clicked += ReturnToMainMenu; // Return to main menu
 //        quitButton.clicked += QuitGame;
-//        backButton.clicked += ShowMainMenu;
-//        pauseButton.clicked += PauseGame;
-//        //resumeButton.clicked += ResumeGame; // Resume game when clicked
 
-//        // Ensure correct visibility at start
+//        if (fullscreenRadioButton != null)
+//        {
+//            fullscreenRadioButton.RegisterValueChangedCallback(evt => ToggleFullscreen(evt.newValue));
+//        }
+
+//        ResetUI();
+//    }
+
+//    private void ResetUI()
+//    {
 //        mainMenu.style.display = DisplayStyle.Flex;
-//        pauseMenu.style.display = DisplayStyle.None;
 //        optionsMenu.style.display = DisplayStyle.None;
+//        audioSettingsUI.style.display = DisplayStyle.None; // Ensure audio settings is hidden at start
+//        videoSettingsUI.style.display = DisplayStyle.None;
+//        settingsUI.style.display = DisplayStyle.None;
+//        graphicsUI.style.display = DisplayStyle.None;
+
+//        Time.timeScale = 0f; // Ensure game is paused when in the menu
 //    }
 
 //    private void StartGame()
 //    {
-//        mainMenu.style.display = DisplayStyle.None; // Hide the main menu
-//        pauseMenu.style.display = DisplayStyle.Flex; // Show pause menu
-//        //UpdateScoreDisplay(); // Display current score in the pause menu
-
-//        // Pause game time to simulate "pause"
-//        Time.timeScale = 0f;
-
-//        // Call GameManager to start the game (if needed)
+//        Debug.Log("Starting Game...");
+//        mainMenu.style.display = DisplayStyle.None;
+//        Time.timeScale = 1f;
 //        GameManager.Instance.StartGame();
 //    }
 
-//    private void ShowOptions()
-//    {
-//        mainMenu.style.display = DisplayStyle.None;
-//        pauseMenu.style.display = DisplayStyle.None;
-//        optionsMenu.style.display = DisplayStyle.Flex;
-//    }
-
-//    private void ShowMainMenu()
-//    {
-//        mainMenu.style.display = DisplayStyle.Flex;
-//        pauseMenu.style.display = DisplayStyle.None;
-//        optionsMenu.style.display = DisplayStyle.None;
-
-//        // Unpause the game when returning to the main menu
-//        Time.timeScale = 1f;
-//    }
-
-//    private void QuitGame()
-//    {
-//        GameManager.Instance.QuitGame();
-//    }
-
-//    void PauseGame()
-//    {
-//        GameManager.Instance.PauseGame();
-//    }
-
-//    // Call this method when the user presses "Resume" from the pause menu
-//    public void ResumeGame()
-//    {
-//        GameManager.Instance.ResumeGame();
-//        //pauseMenu.style.display = DisplayStyle.None; // Hide pause menu
-//        //Time.timeScale = 1f; // Resume game
-//    }
-
-//    // Method to update the score display in the pause menu
-//    //private void UpdateScoreDisplay()
-//    //{
-//    //    // Assuming GameManager handles the score logic
-//    //    int score = GameManager.Instance.GetScore();
-//    //    scoreLabel.text = "Score: " + score.ToString();
-//    //}
+//    private void ShowOptions() => GameManager.Instance.ShowMenu(optionsMenu);
+//    private void OpenAudioSettings() => GameManager.Instance.ShowMenu(audioSettingsUI); // Open audio settings
+//    private void OpenVideoSettings() => GameManager.Instance.ShowMenu(videoSettingsUI);
+//    private void OpenSettingsPage() => GameManager.Instance.ShowMenu(settingsUI);
+//    private void OpenGraphicsPage() => GameManager.Instance.ShowMenu(graphicsUI);
+//    private void GoBack() => GameManager.Instance.Back(); // Handle back navigation
+//    private void ReturnToMainMenu() => GameManager.Instance.ShowMenu(mainMenu); // Return to main menu
+//    private void QuitGame() => GameManager.Instance.QuitGame();
+//    private void ToggleFullscreen(bool isFullscreen) => GameManager.Instance.ToggleFullscreen(isFullscreen);
 //}
 
-
-//using UnityEngine;
-//using UnityEngine.UIElements;
-
-//public class MainMenuController : MonoBehaviour
-//{
-//    private VisualElement mainMenu;
-//    private VisualElement optionsMenu;
-//    private UIDocument uiDocument;
-//    private VisualElement pauseMenu;
-
-//    private void OnEnable()
-//    {
-//        uiDocument = GetComponent<UIDocument>();
-//        var root = uiDocument.rootVisualElement;
-
-//        // Get UI Elements
-//        mainMenu = root.Q<VisualElement>("CQYS_startPage");
-//        optionsMenu = root.Q<VisualElement>("OptionsPage");
-//        pauseMenu = root.Q<VisualElement>("PauseMENU");
-
-//        Button startButton = root.Q<Button>("StartButton");
-//        Button optionsButton = root.Q<Button>("OptionsButton");
-//        Button quitButton = root.Q<Button>("QuitButton");
-//        Button backButton = root.Q<Button>("BackButton");
-
-//        // Assign button event handlers
-//        startButton.clicked += StartGame;
-//        optionsButton.clicked += ShowOptions;
-//        quitButton.clicked += QuitGame;
-//        backButton.clicked += ShowMainMenu;
-
-//        // Ensure correct visibility at start
-//        mainMenu.style.display = DisplayStyle.Flex;
-//        pauseMenu.style.display = DisplayStyle.None;
-//        optionsMenu.style.display = DisplayStyle.None;
-//    }
-
-//    private void StartGame()
-//    {
-//        mainMenu.style.display = DisplayStyle.None; // Hide the main menu
-//        pauseMenu.style.display = DisplayStyle.Flex;
-//        GameManager.Instance.StartGame(); // Start the game
-//    }
-
-//    private void ShowOptions()
-//    {
-//        mainMenu.style.display = DisplayStyle.None;
-//        pauseMenu.style.display = DisplayStyle.None;
-//        optionsMenu.style.display = DisplayStyle.Flex;
-//    }
-
-//    private void ShowMainMenu()
-//    {
-//        mainMenu.style.display = DisplayStyle.Flex;
-//        pauseMenu.style.display = DisplayStyle.None;
-//        optionsMenu.style.display = DisplayStyle.None;
-//    }
-
-//    private void QuitGame()
-//    {
-//        GameManager.Instance.QuitGame();
-//    }
-//}
 
 
 using UnityEngine;
@@ -236,97 +99,131 @@ public class MainMenuController : MonoBehaviour
 {
     private VisualElement mainMenu;
     private VisualElement optionsMenu;
-    private UIDocument uiDocument;
     private VisualElement pauseMenu;
     private VisualElement resumeMenu;
-    private Label scoreLabel; // To show the score on the pause menu
+    private VisualElement gameOverMenu;
+    private VisualElement audioSettingsUI;
+    private VisualElement videoSettingsUI;
+    private VisualElement settingsUI;
+    private VisualElement graphicsUI;
+
+    private UIDocument uiDocument;
 
     private void OnEnable()
     {
         uiDocument = GetComponent<UIDocument>();
         var root = uiDocument.rootVisualElement;
 
-        // Get UI Elements
         mainMenu = root.Q<VisualElement>("CQYS_startPage");
         optionsMenu = root.Q<VisualElement>("OptionsPage");
         pauseMenu = root.Q<VisualElement>("PauseMENU");
         resumeMenu = root.Q<VisualElement>("ResumeMenu");
-        scoreLabel = pauseMenu.Q<Label>("ScoreLabel"); // Assuming "ScoreLabel" is the name of your score element
+        gameOverMenu = root.Q<VisualElement>("GameOverMenu");
+        audioSettingsUI = root.Q<VisualElement>("AudioPage");
+        videoSettingsUI = root.Q<VisualElement>("VideoPage");
+        settingsUI = root.Q<VisualElement>("VideoSettingsPage");
+        graphicsUI = root.Q<VisualElement>("GraphicsPage");
 
-        Button startButton = root.Q<Button>("StartButton");
-        Button optionsButton = root.Q<Button>("OptionsButton");
-        Button quitButton = root.Q<Button>("QuitButton");
-        Button backButton = root.Q<Button>("BackButton");
-        Button resumeButton = resumeMenu.Q<Button>("ResumeButton"); // Assuming you have a Resume button in the pause menu
-        Button pauseButton = pauseMenu.Q<Button>("PauseButton");
+        Button startButton = mainMenu.Q<Button>("StartButton");
+        Button optionsButton = mainMenu.Q<Button>("OptionsButton");
+        Button audioButton = optionsMenu.Q<Button>("AudioButton");
+        Button videoButton = optionsMenu.Q<Button>("VideoButton");
+        Button settingsButton = videoSettingsUI.Q<Button>("SettingslButton");
+        Button graphicsButton = videoSettingsUI.Q<Button>("GraphicsButton");
+        Button quitButton = mainMenu.Q<Button>("QuitButton");
+        Button backButtonGO = gameOverMenu.Q<Button>("RmainMenuButton"); // Back button to go back to main menu
+        Button backButtonOp =  optionsMenu.Q<Button>("BackButton");
+        Button backButtonAud = audioSettingsUI.Q<Button>("BackButton");
+        Button backButtonVS = videoSettingsUI.Q<Button>("BackButton");
+        Button backButtonGs = graphicsUI.Q<Button>("BackButton");
+        Button backButtonS = settingsUI.Q<Button>("BackButton");
+        Button RMMGO = gameOverMenu.Q<Button>("RmainMenuButton");
+        Button RMMAud = audioSettingsUI.Q<Button>("RmainMenuButton");
+        Button RMMVS = videoSettingsUI.Q<Button>("RmainMenuButton");
+        Button RMMS = settingsUI.Q<Button>("RmainMenuButton");
+        Button RMMPs = resumeMenu.Q<Button>("RmainMenuButton");
+        Button RMMGs = graphicsUI.Q<Button>("RmainMenuButton");
+        RadioButton fullscreenRadioButton = videoSettingsUI.Q<RadioButton>("FullOrWindowed");
 
-        // Assign button event handlers
         startButton.clicked += StartGame;
         optionsButton.clicked += ShowOptions;
+        videoButton.clicked += OpenVideoSettings;
+        settingsButton.clicked += OpenSettingsPage;
+        graphicsButton.clicked += OpenGraphicsPage;
         quitButton.clicked += QuitGame;
-        backButton.clicked += ShowMainMenu;
-        pauseButton.clicked += PauseGame;
-        resumeButton.clicked += ResumeGame; // Resume game when clicked
+        audioButton.clicked += OpenAudioSettings;
+        backButtonGO.clicked += GoBack;
+        backButtonOp.clicked += GoBack;
+        backButtonAud.clicked += GoBack;
+        backButtonVS.clicked += GoBack;
+        backButtonS.clicked += GoBack;
+        backButtonGs.clicked += GoBack;
+        RMMAud.clicked += ReturnToMainMenu;
+        RMMS.clicked += ReturnToMainMenu;
+        RMMGO.clicked += ReturnToMainMenu;
+        RMMVS.clicked += ReturnToMainMenu;
+        RMMVS.clicked -= ReturnToMainMenu;
+        RMMPs.clicked -= ReturnToMainMenu;
+        RMMGs.clicked -= ReturnToMainMenu;
+        //fullscreenRadioButton.clicked += () => ToggleFullscreen(!Screen.fullScreen);
 
-        // Ensure correct visibility at start
+        // Back button for the main menu to return to main page
+        //if (backButtonGO != null)
+        //{
+        //    backButtonGO.clicked += ReturnToMainMenu;
+        //}
+
+        if (fullscreenRadioButton != null)
+        {
+            fullscreenRadioButton.RegisterValueChangedCallback(evt =>
+            {
+                Debug.Log("RadioButton Callback Triggered! New Value: " + evt.newValue);
+                ToggleFullscreen(evt.newValue);
+            });
+        }
+        else
+        {
+            Debug.LogError("Fullscreen RadioButton is NULL! Check UI Query.");
+        }
+
+
+        ResetUI();
+    }
+
+    private void ResetUI()
+    {
         mainMenu.style.display = DisplayStyle.Flex;
-        pauseMenu.style.display = DisplayStyle.None;
         optionsMenu.style.display = DisplayStyle.None;
+        videoSettingsUI.style.display = DisplayStyle.None;
+        settingsUI.style.display = DisplayStyle.None;
+        graphicsUI.style.display = DisplayStyle.None;
+
+        Time.timeScale = 0f; // Ensure game is paused when in the menu
     }
 
     private void StartGame()
     {
-        mainMenu.style.display = DisplayStyle.None; // Hide the main menu
-        pauseMenu.style.display = DisplayStyle.Flex; // Show pause menu
-        //UpdateScoreDisplay(); // Display current score in the pause menu
-
-        // Pause game time to simulate "pause"
-        Time.timeScale = 0f;
-
-        // Call GameManager to start the game (if needed)
+        Debug.Log("Starting Game...");
+        mainMenu.style.display = DisplayStyle.None;
+        Time.timeScale = 1f;
         GameManager.Instance.StartGame();
     }
 
-    private void ShowOptions()
+    private void ShowOptions() => GameManager.Instance.ShowMenu(optionsMenu);
+    private void OpenVideoSettings() => GameManager.Instance.ShowVideoSettings();
+
+    private void GoBack() => GameManager.Instance.Back(); // Handle back navigation
+    private void OpenSettingsPage() => GameManager.Instance.ShowSettingsPage();
+
+    private void OpenAudioSettings() => GameManager.Instance.ShowMenu(audioSettingsUI); // Open audio settings
+    private void OpenGraphicsPage() => GameManager.Instance.ShowGraphicsPage();
+    private void QuitGame() => GameManager.Instance.QuitGame();
+    private void ToggleFullscreen(bool isFullscreen) => GameManager.Instance.ToggleFullscreen(isFullscreen);
+
+    // New method to handle back button from the main menu
+    private void ReturnToMainMenu()
     {
-        mainMenu.style.display = DisplayStyle.None;
-        pauseMenu.style.display = DisplayStyle.None;
-        optionsMenu.style.display = DisplayStyle.Flex;
+        Debug.Log("Returning to Main Menu...");
+        GameManager.Instance.ShowMenu(mainMenu);
     }
-
-    private void ShowMainMenu()
-    {
-        mainMenu.style.display = DisplayStyle.Flex;
-        pauseMenu.style.display = DisplayStyle.None;
-        optionsMenu.style.display = DisplayStyle.None;
-
-        // Unpause the game when returning to the main menu
-        Time.timeScale = 1f;
-    }
-
-    private void QuitGame()
-    {
-        GameManager.Instance.QuitGame();
-    }
-
-    void PauseGame()
-    {
-        GameManager.Instance.PauseGame();
-    }
-
-    // Call this method when the user presses "Resume" from the pause menu
-    public void ResumeGame()
-    {
-        GameManager.Instance.ResumeGame();
-        //pauseMenu.style.display = DisplayStyle.None; // Hide pause menu
-        //Time.timeScale = 1f; // Resume game
-    }
-
-    // Method to update the score display in the pause menu
-    //private void UpdateScoreDisplay()
-    //{
-    //    // Assuming GameManager handles the score logic
-    //    int score = GameManager.Instance.GetScore();
-    //    scoreLabel.text = "Score: " + score.ToString();
-    //}
 }
