@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -120,7 +121,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
         isGameOver = false;
-        ShowMenu(null); // Hide all menus
+        ShowMenu(pauseMenuUI, true); // Hide all menus
+        pauseMenuUI.style.display = DisplayStyle.Flex;        
     }
 
     public void QuitGame()
@@ -148,7 +150,25 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void ShowMenu(VisualElement menu)
+    //public void ShowMenu(VisualElement menu)
+    //{
+    //    if (menuHistory.Count > 0)
+    //        menuHistory.Peek().style.display = DisplayStyle.None; // Hide current menu
+
+    //    if (menu != null)
+    //    {
+    //        menu.style.display = DisplayStyle.Flex;
+    //        menuHistory.Push(menu);
+    //        Time.timeScale = 0f; // Pause while in menus
+    //    }
+    //    else
+    //    {
+    //        menuHistory.Clear();
+    //        Time.timeScale = 1f; // Resume game when no menus are open
+    //    }
+    //}
+
+    public void ShowMenu(VisualElement menu, bool isPauseMenu = false)
     {
         if (menuHistory.Count > 0)
             menuHistory.Peek().style.display = DisplayStyle.None; // Hide current menu
@@ -157,7 +177,12 @@ public class GameManager : MonoBehaviour
         {
             menu.style.display = DisplayStyle.Flex;
             menuHistory.Push(menu);
-            Time.timeScale = 0f; // Pause while in menus
+
+            // Only pause the game if it's NOT the Pause menu
+            if (!isPauseMenu)
+            {
+                Time.timeScale = 0f; // Pause game for other menus
+            }
         }
         else
         {
@@ -203,6 +228,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PauseGame()
+    {
+        Time.timeScale = 0f; // Freeze game time
+        ShowMenu(resumeMenuUI); 
+        Debug.Log("Game Paused");
+    }
+
     public void AdjustContrast(float value) => RenderSettings.ambientIntensity = value;
     public void AdjustBrightness(float value) => RenderSettings.ambientLight = new Color(value, value, value);
     public void ToggleFullscreen(bool isFullscreen)
@@ -223,7 +255,27 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Fullscreen: {Screen.fullScreen}, Mode: {Screen.fullScreenMode}, Resolution: {Screen.currentResolution.width}x{Screen.currentResolution.height}");
     }
 
+    public void ReturnToMainMenu()
+    {
+        // Stop time so the game doesn’t continue running
+        Time.timeScale = 0f;
 
+        // Optionally, reset necessary game states here
+        ResetGameState();
 
+        // Load the Main Menu scene
+        SceneManager.LoadScene("GameScene");
+    }
 
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        ShowMenu(pauseMenuUI, true);
+    }
+
+    private void ResetGameState()
+    {
+        // Example: Reset player health, score, or other persistent states
+        Debug.Log("Game state reset before returning to Main Menu.");
+    }
 }

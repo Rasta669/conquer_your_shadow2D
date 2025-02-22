@@ -1,97 +1,3 @@
-//using UnityEngine;
-//using UnityEngine.UIElements;
-
-//public class MainMenuController : MonoBehaviour
-//{
-//    private VisualElement mainMenu;
-//    private VisualElement optionsMenu;
-//    private VisualElement pauseMenu;
-//    private VisualElement resumeMenu;
-//    private VisualElement gameOverMenu;
-//    private VisualElement audioSettingsUI;
-//    private VisualElement videoSettingsUI;
-//    private VisualElement settingsUI;
-//    private VisualElement graphicsUI;
-
-//    private UIDocument uiDocument;
-
-//    private void OnEnable()
-//    {
-//        uiDocument = GetComponent<UIDocument>();
-//        var root = uiDocument.rootVisualElement;
-
-//        mainMenu = root.Q<VisualElement>("CQYS_startPage");
-//        optionsMenu = root.Q<VisualElement>("OptionsPage");
-//        pauseMenu = root.Q<VisualElement>("PauseMENU");
-//        resumeMenu = root.Q<VisualElement>("ResumeMenu");
-//        gameOverMenu = root.Q<VisualElement>("GameOverMenu");
-//        audioSettingsUI = root.Q<VisualElement>("AudioPage");
-//        videoSettingsUI = root.Q<VisualElement>("VideoPage");
-//        settingsUI = root.Q<VisualElement>("VideoSettingsPage");
-//        graphicsUI = root.Q<VisualElement>("GraphicsPage");
-
-//        Button startButton = mainMenu.Q<Button>("StartButton");
-//        Button optionsButton = mainMenu.Q<Button>("OptionsButton");
-//        Button audioButton = optionsMenu.Q<Button>("AudioButton"); // Added audio settings button
-//        Button videoButton = optionsMenu.Q<Button>("VideoButton");
-//        Button settingsButton = videoSettingsUI.Q<Button>("SettingslButton");
-//        Button graphicsButton = videoSettingsUI.Q<Button>("GraphicsButton");
-//        Button backButton = root.Q<Button>("BackButton"); // Back button for navigation
-//        Button returnToMainMenuButton = root.Q<Button>("RmainMenuButton"); // Return to main menu
-//        Button quitButton = mainMenu.Q<Button>("QuitButton");
-//        RadioButton fullscreenRadioButton = videoSettingsUI.Q<RadioButton>("Fullscreen");
-
-//        startButton.clicked += StartGame;
-//        optionsButton.clicked += ShowOptions;
-//        audioButton.clicked += OpenAudioSettings; // Linked audio settings
-//        videoButton.clicked += OpenVideoSettings;
-//        settingsButton.clicked += OpenSettingsPage;
-//        graphicsButton.clicked += OpenGraphicsPage;
-//        backButton.clicked += GoBack; // Back button function
-//        returnToMainMenuButton.clicked += ReturnToMainMenu; // Return to main menu
-//        quitButton.clicked += QuitGame;
-
-//        if (fullscreenRadioButton != null)
-//        {
-//            fullscreenRadioButton.RegisterValueChangedCallback(evt => ToggleFullscreen(evt.newValue));
-//        }
-
-//        ResetUI();
-//    }
-
-//    private void ResetUI()
-//    {
-//        mainMenu.style.display = DisplayStyle.Flex;
-//        optionsMenu.style.display = DisplayStyle.None;
-//        audioSettingsUI.style.display = DisplayStyle.None; // Ensure audio settings is hidden at start
-//        videoSettingsUI.style.display = DisplayStyle.None;
-//        settingsUI.style.display = DisplayStyle.None;
-//        graphicsUI.style.display = DisplayStyle.None;
-
-//        Time.timeScale = 0f; // Ensure game is paused when in the menu
-//    }
-
-//    private void StartGame()
-//    {
-//        Debug.Log("Starting Game...");
-//        mainMenu.style.display = DisplayStyle.None;
-//        Time.timeScale = 1f;
-//        GameManager.Instance.StartGame();
-//    }
-
-//    private void ShowOptions() => GameManager.Instance.ShowMenu(optionsMenu);
-//    private void OpenAudioSettings() => GameManager.Instance.ShowMenu(audioSettingsUI); // Open audio settings
-//    private void OpenVideoSettings() => GameManager.Instance.ShowMenu(videoSettingsUI);
-//    private void OpenSettingsPage() => GameManager.Instance.ShowMenu(settingsUI);
-//    private void OpenGraphicsPage() => GameManager.Instance.ShowMenu(graphicsUI);
-//    private void GoBack() => GameManager.Instance.Back(); // Handle back navigation
-//    private void ReturnToMainMenu() => GameManager.Instance.ShowMenu(mainMenu); // Return to main menu
-//    private void QuitGame() => GameManager.Instance.QuitGame();
-//    private void ToggleFullscreen(bool isFullscreen) => GameManager.Instance.ToggleFullscreen(isFullscreen);
-//}
-
-
-
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -131,6 +37,9 @@ public class MainMenuController : MonoBehaviour
         instructionsUI = root.Q<VisualElement>("InstructionsPage");
 
         Button startButton = mainMenu.Q<Button>("StartButton");
+        Button pauseButton = pauseMenu.Q<Button>("PauseButton");
+        Button resumeButton = resumeMenu.Q<Button>("ResumeButton");
+        Button restarteButtonPs = resumeMenu.Q<Button>("RestartButton");
         Button optionsButton = mainMenu.Q<Button>("OptionsButton");
         Button achievemntsButton = mainMenu.Q<Button>("AchievemntsButton");
         Button audioButton = optionsMenu.Q<Button>("AudioButton");
@@ -141,6 +50,7 @@ public class MainMenuController : MonoBehaviour
         Button graphicsButton = videoSettingsUI.Q<Button>("GraphicsButton");
         Button quitButton = mainMenu.Q<Button>("QuitButton");
         Button backButtonGO = gameOverMenu.Q<Button>("RmainMenuButton"); // Back button to go back to main menu
+        Button restartButtonGO = gameOverMenu.Q<Button>("RestartButton");
         Button backButtonOp =  optionsMenu.Q<Button>("BackButton");
         Button backButtonAud = audioSettingsUI.Q<Button>("BackButton");
         Button backButtonVS = videoSettingsUI.Q<Button>("BackButton");
@@ -149,7 +59,7 @@ public class MainMenuController : MonoBehaviour
         Button backButtonAch = achievemntsUI.Q<Button>("BackButton");
         Button backButtonInstr = instructionsUI.Q<Button>("BackButton");
         Button backButtonContrll = controllerUI.Q<Button>("BackButton");
-        Button RMMGO = gameOverMenu.Q<Button>("RmainMenuButton");
+        Button RMMGO = gameOverMenu.Q<Button>("RmainMenuButton"); // need to edit game logic to restart
         Button RMMAud = audioSettingsUI.Q<Button>("RmainMenuButton");
         Button RMMVS = videoSettingsUI.Q<Button>("RmainMenuButton");
         Button RMMS = settingsUI.Q<Button>("RmainMenuButton");
@@ -161,11 +71,15 @@ public class MainMenuController : MonoBehaviour
         RadioButton fullscreenRadioButton = videoSettingsUI.Q<RadioButton>("FullOrWindowed");
 
         startButton.clicked += StartGame;
+        pauseButton.clicked += PauseGame; 
+        resumeButton.clicked += Resume;
+        restarteButtonPs.clicked += Restart;
         optionsButton.clicked += ShowOptions;
         achievemntsButton.clicked += ShowAchievemntsUI;
         videoButton.clicked += OpenVideoSettings;
         instructionsButton.clicked += ShowInstructionsUI;
         controllerButton.clicked += ShowControllerUI;
+        restartButtonGO.clicked += Restart;
         settingsButton.clicked += OpenSettingsPage;
         graphicsButton.clicked += OpenGraphicsPage;
         quitButton.clicked += QuitGame;
@@ -181,7 +95,7 @@ public class MainMenuController : MonoBehaviour
         backButtonContrll.clicked += GoBack;
         RMMAud.clicked += ReturnToMainMenu;
         RMMS.clicked += ReturnToMainMenu;
-        RMMGO.clicked += ReturnToMainMenu;
+        RMMGO.clicked += ReturnToMainMenuGO;
         RMMVS.clicked += ReturnToMainMenu;
         RMMVS.clicked += ReturnToMainMenu;
         RMMPs.clicked += ReturnToMainMenu;
@@ -263,5 +177,25 @@ public class MainMenuController : MonoBehaviour
     void ShowControllerUI()
     {
         GameManager.Instance.ShowControllerUI();
+    }
+
+    void Restart()
+    {
+        GameManager.Instance.RestartGame();
+    }
+
+    void ReturnToMainMenuGO()
+    {
+        GameManager.Instance.ReturnToMainMenu();
+    }
+
+    void PauseGame()
+    {
+        GameManager.Instance.PauseGame();   
+    }
+
+    void Resume()
+    {
+        GameManager.Instance.ResumeGame();
     }
 }
