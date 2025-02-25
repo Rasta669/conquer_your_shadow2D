@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        //CheckGrounded();
         if (isDead || Time.timeScale == 0) return;
 
         if (!isDashing)
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             StartCoroutine(Dash());
-        }
+        }   
     }
 
     void Move()
@@ -106,6 +107,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+
+
     //IEnumerator RecordPosition()
     //{
     //    while (true)
@@ -113,7 +116,9 @@ public class PlayerMovement : MonoBehaviour
     //        if (shadowFollower != null)
     //        {
     //            bool isRunning = Mathf.Abs(rb.linearVelocity.x) > 0 && isGrounded;
-    //            shadowFollower.StorePosition(rb.position, rb.linearVelocity, !isGrounded, isDashing, isRunning);
+    //            bool jumped = !isGrounded && rb.linearVelocity.y > 0.1f; // Ensures actual upward movement
+
+    //            shadowFollower.StorePosition(rb.position, rb.linearVelocity, jumped, isDashing, isRunning);
     //        }
     //        yield return new WaitForSeconds(positionRecordInterval);
     //    }
@@ -126,13 +131,14 @@ public class PlayerMovement : MonoBehaviour
             if (shadowFollower != null)
             {
                 bool isRunning = Mathf.Abs(rb.linearVelocity.x) > 0 && isGrounded;
-                bool jumped = !isGrounded && rb.linearVelocity.y > 0.1f; // Ensures actual upward movement
+                bool jumped = !isGrounded && rb.linearVelocity.y > 0.1f;
 
                 shadowFollower.StorePosition(rb.position, rb.linearVelocity, jumped, isDashing, isRunning);
             }
             yield return new WaitForSeconds(positionRecordInterval);
         }
     }
+
 
 
 
@@ -187,5 +193,15 @@ public class PlayerMovement : MonoBehaviour
         Time.timeScale = 1f; // Ensure UI updates properly
         gameManager.GameOver();
     }
+
+    void CheckGrounded()
+    {
+        Vector2 feetPosition = new Vector2(transform.position.x, transform.position.y - 0.3f); // Adjust if needed
+        float checkRadius = 0.2f;
+        isGrounded = Physics2D.OverlapCircle(feetPosition, checkRadius, LayerMask.GetMask("Ground"));
+
+        Debug.DrawRay(transform.position, Vector2.down * 0.5f, isGrounded ? Color.green : Color.red);
+    }
+
 }
 

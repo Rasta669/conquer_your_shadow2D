@@ -13,6 +13,8 @@ public class CameraFollow : MonoBehaviour
     public float defaultZoom = 7f;
     public float maxZoomOut = 8.5f;
     public float zoomSpeed = 1.5f;
+    public float verticalLockStrength = 1f; // Set between 0 (fully locked) and 1 (default movement)
+
 
     private Vector3 velocity = Vector3.zero;
     private Rigidbody2D playerRb;
@@ -51,24 +53,31 @@ public class CameraFollow : MonoBehaviour
         float playerSpeedX = lastVelocity.x;
         float playerY = player.position.y;
 
-        // Look ahead logic (prevents camera from over-extending)
+        // Look ahead logic
         float lookAhead = Mathf.Clamp(playerSpeedX * 0.2f, -lookAheadFactor, lookAheadFactor);
 
-        // Vertical follow logic (only moves up/down when needed)
+        // Vertical follow logic with lock strength
         float targetY = transform.position.y;
-        if (Mathf.Abs(playerY - transform.position.y) > verticalFollowThreshold)
+
+        if (playerRb.linearVelocity.y > 0) // Jumping
         {
-            targetY = Mathf.Lerp(transform.position.y, playerY, verticalSmoothing);
+            targetY = Mathf.Lerp(transform.position.y, playerY, verticalLockStrength * verticalSmoothing);
+        }
+        else if (playerRb.linearVelocity.y < -2f) // Falling
+        {
+            targetY = Mathf.Lerp(transform.position.y, playerY, verticalSmoothing * 0.5f);
         }
 
-        // Calculate target position, ensuring it stays within the level boundaries
+        // Limit max vertical movement
+        targetY = Mathf.Min(targetY, player.position.y + 0.2f);
+
+        // Apply position change
         Vector3 targetPosition = new Vector3(
-            Mathf.Clamp(player.position.x + lookAhead, minXLimit, maxXLimit), // Clamp X movement
+            Mathf.Clamp(player.position.x + lookAhead, minXLimit, maxXLimit),
             targetY,
-            -10f // Ensure the camera stays in 2D view
+            -10f
         ) + offset;
 
-        // Smoothly move the camera
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
 
         // 🎥 Dynamic Zoom: Zoom out when moving fast
