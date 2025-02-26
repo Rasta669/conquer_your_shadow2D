@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private VisualElement achievemntsUI;
     private VisualElement controllerUI;
     private VisualElement instructionsUI;
+    private VisualElement gameModePage;
 
     private Slider contrastSlider;
     private Slider brightnessSlider;
@@ -32,18 +33,60 @@ public class GameManager : MonoBehaviour
 
     private Stack<VisualElement> menuHistory = new Stack<VisualElement>(); // Track menu navigation
 
-    void Awake()
+    //void Awake()
+    //{
+    //    if (Instance == null)
+    //    {
+    //        Instance = this;
+    //        DontDestroyOnLoad(gameObject);
+    //        SceneManager.sceneLoaded += OnSceneLoaded;
+    //    }
+    //    else
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
+
+    //public static GameManager Instance;
+
+    public enum GameMode { Race, Survival }
+    public GameMode currentMode = GameMode.Race; // Default mode
+
+    public float shadowSpeed = 5f; // Public parameter to modify in Inspector
+
+    //private void Awake()
+    //{
+    //    if (Instance == null)
+    //    {
+    //        Instance = this;
+    //        DontDestroyOnLoad(gameObject);
+    //    }
+    //    else
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
+
+    private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneLoaded += OnSceneLoaded; // Make sure this line is uncommented
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+
+    public void SetGameMode(int mode)
+    {
+        currentMode = (GameMode)mode; // Convert int to enum
+        StartGame();
+        //SceneManager.LoadScene("GameScene"); // Reloads scene with selected mode
     }
 
     private void OnDestroy()
@@ -73,6 +116,7 @@ public class GameManager : MonoBehaviour
         achievemntsUI = root.Q<VisualElement>("AchievementsPage");
         controllerUI = root.Q<VisualElement>("ControllerPage");
         instructionsUI = root.Q<VisualElement>("InstructionsPage");
+        gameModePage = root.Q<VisualElement>("GameModesPage");
 
         contrastSlider = settingsUI.Q<Slider>("Contrast");
         brightnessSlider = settingsUI.Q<Slider>("Brightness");
@@ -110,19 +154,33 @@ public class GameManager : MonoBehaviour
         if (achievemntsUI != null) achievemntsUI.style.display = DisplayStyle.None;
         if (controllerUI != null) controllerUI.style.display = DisplayStyle.None;
         if (instructionsUI != null) instructionsUI.style.display = DisplayStyle.None;
+        if (gameModePage != null) gameModePage.style.display = DisplayStyle.None;
 
         menuHistory.Clear();
         menuHistory.Push(mainMenuUI); // Start from the main menu
     }
 
+    //public void StartGame()
+    //{
+    //    Debug.Log("Game Started!");
+    //    mainMenuUI.style.display = DisplayStyle.None;
+    //    ShowMenu(pauseMenuUI, true); // Hide all menus
+    //    Time.timeScale = 1f;
+    //    isPaused = false;
+    //    isGameOver = false;
+    //    ShowMenu(pauseMenuUI, true); // Hide all menus
+    //    //pauseMenuUI.style.display = DisplayStyle.Flex;        
+    //}
     public void StartGame()
     {
         Debug.Log("Game Started!");
-        Time.timeScale = 1f;
-        isPaused = false;
-        isGameOver = false;
-        ShowMenu(pauseMenuUI, true); // Hide all menus
-        pauseMenuUI.style.display = DisplayStyle.Flex;        
+        Debug.Log("Starting game with mode: " + currentMode);
+        mainMenuUI.style.display = DisplayStyle.None;
+        gameModePage.style.display= DisplayStyle.None;
+        Time.timeScale = 1f; // Resume time
+        isPaused = false; // Set game state
+        isGameOver = false; // Reset game over state
+        ShowMenu(pauseMenuUI, true); // Hide all menus                 
     }
 
     public void QuitGame()
@@ -150,23 +208,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    //public void ShowMenu(VisualElement menu)
-    //{
-    //    if (menuHistory.Count > 0)
-    //        menuHistory.Peek().style.display = DisplayStyle.None; // Hide current menu
-
-    //    if (menu != null)
-    //    {
-    //        menu.style.display = DisplayStyle.Flex;
-    //        menuHistory.Push(menu);
-    //        Time.timeScale = 0f; // Pause while in menus
-    //    }
-    //    else
-    //    {
-    //        menuHistory.Clear();
-    //        Time.timeScale = 1f; // Resume game when no menus are open
-    //    }
-    //}
 
     public void ShowMenu(VisualElement menu, bool isPauseMenu = false)
     {
@@ -277,5 +318,11 @@ public class GameManager : MonoBehaviour
     {
         // Example: Reset player health, score, or other persistent states
         Debug.Log("Game state reset before returning to Main Menu.");
+    }
+
+    public void ShowGameModemenu()
+    {
+        Debug.Log("Start Button Clicked! Showing Game Mode Menu...");
+        GameManager.Instance.ShowMenu(gameModePage);
     }
 }

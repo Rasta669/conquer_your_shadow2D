@@ -21,6 +21,11 @@ public class CharacterAnimator : MonoBehaviour
         animator.SetBool("IsJumping", isJumping);
     }
 
+    public void SetIsClimbing (bool isClimbing)
+    {
+        animator.SetBool("IsClimbing", isClimbing);
+    }
+
     // Call this to play death animation
     public void PlayDeathAnimation()
     {

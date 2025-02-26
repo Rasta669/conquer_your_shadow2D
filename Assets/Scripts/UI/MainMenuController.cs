@@ -15,6 +15,7 @@ public class MainMenuController : MonoBehaviour
     private VisualElement achievemntsUI;
     private VisualElement controllerUI;
     private VisualElement instructionsUI;
+    private VisualElement gameModePage; 
 
     private UIDocument uiDocument;
 
@@ -35,8 +36,12 @@ public class MainMenuController : MonoBehaviour
         achievemntsUI = root.Q<VisualElement>("AchievementsPage");
         controllerUI = root.Q<VisualElement>("ControllerPage");
         instructionsUI = root.Q<VisualElement>("InstructionsPage");
+        gameModePage = root.Q<VisualElement>("GameModesPage");
+
 
         Button startButton = mainMenu.Q<Button>("StartButton");
+        Button raceButton  = gameModePage.Q<Button>("RaceButton");
+        Button survivalButton = gameModePage.Q<Button>("SurvivalButton");
         Button pauseButton = pauseMenu.Q<Button>("PauseButton");
         Button resumeButton = resumeMenu.Q<Button>("ResumeButton");
         Button restarteButtonPs = resumeMenu.Q<Button>("RestartButton");
@@ -70,7 +75,9 @@ public class MainMenuController : MonoBehaviour
         Button RMMContrll = controllerUI.Q<Button>("RmainMenuButton");
         RadioButton fullscreenRadioButton = videoSettingsUI.Q<RadioButton>("FullOrWindowed");
 
-        startButton.clicked += StartGame;
+        startButton.clicked += ShowGameModemenu;
+        raceButton.clicked += SetRaceMode;
+        survivalButton.clicked += SetSurvivalMode;
         pauseButton.clicked += PauseGame; 
         resumeButton.clicked += Resume;
         restarteButtonPs.clicked += Restart;
@@ -138,13 +145,13 @@ public class MainMenuController : MonoBehaviour
         Time.timeScale = 0f; // Ensure game is paused when in the menu
     }
 
-    private void StartGame()
-    {
-        Debug.Log("Starting Game...");
-        mainMenu.style.display = DisplayStyle.None;
-        Time.timeScale = 1f;
-        GameManager.Instance.StartGame();
-    }
+    //private void StartGame()
+    //{
+    //    Debug.Log("Starting Game...");
+    //    mainMenu.style.display = DisplayStyle.None;
+    //    Time.timeScale = 1f;
+    //    GameManager.Instance.StartGame();
+    //}
 
     private void ShowOptions() => GameManager.Instance.ShowMenu(optionsMenu);
     private void OpenVideoSettings() => GameManager.Instance.ShowVideoSettings();
@@ -197,5 +204,20 @@ public class MainMenuController : MonoBehaviour
     void Resume()
     {
         GameManager.Instance.ResumeGame();
+    }
+
+    void SetRaceMode()
+    {
+        GameManager.Instance.SetGameMode(0);
+    }
+
+    void SetSurvivalMode()
+    {
+        GameManager.Instance.SetGameMode(1);
+    }
+
+    void ShowGameModemenu()
+    {
+        GameManager.Instance.ShowGameModemenu();
     }
 }
