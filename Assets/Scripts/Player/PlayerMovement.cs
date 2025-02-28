@@ -19,6 +19,9 @@
 //    private bool isDead = false;
 //    private float lastDirection = 1f; // Tracks last movement direction
 
+//    private bool isClimbing = false;
+//    private bool canClimb = false;
+//    private float climbSpeed = 3f;
 //    void Start()
 //    {
 //        rb = GetComponent<Rigidbody2D>();
@@ -31,25 +34,55 @@
 //        StartCoroutine(RecordPosition());
 //    }
 
+//    //void Update()
+//    //{
+//    //    if (isDead || Time.timeScale == 0) return;
+
+//    //    if (!isDashing)
+//    //    {
+//    //        Move();
+//    //    }
+
+//    //    if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+//    //    {
+//    //        Jump();
+//    //    }
+
+//    //    if (Input.GetKeyDown(KeyCode.LeftShift))
+//    //    {
+//    //        StartCoroutine(Dash());
+//    //    }
+//    //}
+
 //    void Update()
 //    {
+//        //CheckGrounded(); // ✅ Always update ground check
+
+//        Debug.Log($"Grounded: {isGrounded}, Velocity: {rb.linearVelocity}, Move Input: {Input.GetAxisRaw("Horizontal")}");
+
 //        if (isDead || Time.timeScale == 0) return;
 
 //        if (!isDashing)
 //        {
-//            Move();
+//            if (!isClimbing) Move(); // ✅ Prevent move while climbing
 //        }
 
-//        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+//        if (Input.GetKeyDown(KeyCode.Space))
 //        {
 //            Jump();
 //        }
 
-//        if (Input.GetKeyDown(KeyCode.LeftShift))
+//        if (Input.GetKey(KeyCode.LeftShift))
 //        {
 //            StartCoroutine(Dash());
 //        }
+
+//        if (canClimb && Input.GetKey(KeyCode.W))
+//        {
+//            StartClimbing();
+//        }
 //    }
+
 
 //    void Move()
 //    {
@@ -58,7 +91,7 @@
 
 //        rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
 
-//        // Store last movement direction for dash
+//        // Store last movement direction for dash and flipping
 //        if (moveInput != 0)
 //        {
 //            lastDirection = Mathf.Sign(moveInput);
@@ -106,7 +139,8 @@
 //                bool isRunning = Mathf.Abs(rb.linearVelocity.x) > 0 && isGrounded;
 //                bool jumped = !isGrounded && rb.linearVelocity.y > 0.1f;
 
-//                shadowFollower.StorePosition(rb.position, rb.linearVelocity, jumped, isDashing, isRunning);
+//                // Store player's position, movement, and facing direction
+//                shadowFollower.StorePosition(rb.position, rb.linearVelocity, jumped, isDashing, isRunning, lastDirection);
 //            }
 //            yield return new WaitForSeconds(positionRecordInterval);
 //        }
@@ -124,6 +158,7 @@
 //            Die();
 //        }
 //    }
+
 //    public bool IsGrounded()
 //    {
 //        return isGrounded;
@@ -151,15 +186,58 @@
 //        gameManager.GameOver();
 //    }
 
+//    //void CheckGrounded()
+//    //{
+//    //    Vector2 feetPosition = new Vector2(transform.position.x, transform.position.y - 0.3f); // Adjust if needed
+//    //    float checkRadius = 0.2f;
+//    //    isGrounded = Physics2D.OverlapCircle(feetPosition, checkRadius, LayerMask.GetMask("Ground"));
+
+//    //    Debug.DrawRay(transform.position, Vector2.down * 0.5f, isGrounded ? Color.green : Color.red);
+//    //}
+
 //    void CheckGrounded()
 //    {
-//        Vector2 feetPosition = new Vector2(transform.position.x, transform.position.y - 0.3f); // Adjust if needed
-//        float checkRadius = 0.2f;
-//        isGrounded = Physics2D.OverlapCircle(feetPosition, checkRadius, LayerMask.GetMask("Ground"));
+//        float rayLength = 0.3f;
+//        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, rayLength, LayerMask.GetMask("Ground"));
 
-//        Debug.DrawRay(transform.position, Vector2.down * 0.5f, isGrounded ? Color.green : Color.red);
+//        isGrounded = hit.collider != null;
+
+//        Debug.DrawRay(transform.position, Vector2.down * rayLength, isGrounded ? Color.green : Color.red);
+//        Debug.Log($"Grounded: {isGrounded} | Hit: {(hit.collider != null ? hit.collider.gameObject.name : "None")}");
 //    }
+
+
+
+//    void StartClimbing()
+//    {
+//        isClimbing = true;
+//        rb.gravityScale = 0; // ✅ Disable gravity while climbing
+//        rb.linearVelocity = new Vector2(rb.linearVelocity.x, climbSpeed);
+//        characterAnimator.SetIsClimbing(true);
+//    }
+
+//    private void OnTriggerEnter2D(Collider2D other)
+//    {
+//        if (other.CompareTag("Ladder"))
+//        {
+//            canClimb = true;
+//        }
+//    }
+
+//    private void OnTriggerExit2D(Collider2D other)
+//    {
+//        if (other.CompareTag("Ladder"))
+//        {
+//            canClimb = false;
+//            isClimbing = false;
+//            rb.gravityScale = 2f; // ✅ Restore gravity when leaving ladder
+//            characterAnimator.SetIsClimbing(false);
+//        }
+//    }
+
 //}
+
+
 
 
 using UnityEngine;
@@ -173,6 +251,9 @@ public class PlayerMovement : MonoBehaviour
     public float dashSpeed = 12f;
     public float dashDuration = 0.2f;
     public float positionRecordInterval = 0.1f;
+    public float climbSpeed = 3f; // Climbing speed
+    public float topLadderYPosition = 10f; // Set the Y position where the top of the ladder is
+    public float bottomLadderYPosition = 0f; // Set the Y position where the bottom of the ladder is
 
     private Rigidbody2D rb;
     private bool isGrounded;
@@ -182,6 +263,10 @@ public class PlayerMovement : MonoBehaviour
     private CharacterAnimator characterAnimator;
     private bool isDead = false;
     private float lastDirection = 1f; // Tracks last movement direction
+
+    private bool isClimbing = false;
+    private bool canClimb = false;
+    private float climbAnimSpeed = 1f; // Store normal climbing animation speed
 
     void Start()
     {
@@ -195,25 +280,75 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(RecordPosition());
     }
 
+    //void Update()
+    //{
+    //    if (isDead || Time.timeScale == 0) return;
+
+    //    if (!isDashing)
+    //    {
+    //        if (!isClimbing) Move(); // ✅ Prevent move while climbing
+    //    }
+
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        Jump();
+    //    }
+
+    //    if (Input.GetKey(KeyCode.LeftShift))
+    //    {
+    //        StartCoroutine(Dash());
+    //    }
+
+    //    if (canClimb && Input.GetKey(KeyCode.W))
+    //    {
+    //        StartClimbing(); // Start climbing if on ladder and pressing W
+    //    }
+
+    //    if (isClimbing)
+    //    {
+    //        Climb(); // Handle climbing logic while on the ladder
+    //    }
+    //}
+
     void Update()
     {
-        if (isDead || Time.timeScale == 0) return;
-
-        if (!isDashing)
+        if (isClimbing)
         {
-            Move();
+            Climb();
         }
-
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        else
         {
-            Jump();
-        }
+            // Normal movement when not climbing
+            if (!isDashing && !isClimbing)
+            {
+                Move();
+            }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            StartCoroutine(Dash());
+            // Jumping
+            if (Input.GetKeyDown(KeyCode.Space) && !isClimbing && isGrounded) // Normal jump on the ground
+            {
+                Jump();
+            }
+
+            // Handle Dash
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                StartCoroutine(Dash());
+            }
+
+            // Start climbing if near ladder and "W" is pressed
+            if (canClimb && Input.GetKey(KeyCode.W))
+            {
+                StartClimbing();
+            }
+            // Stop climbing if "W" is released
+            else if (canClimb && !Input.GetKey(KeyCode.W))
+            {
+                StopClimbing();
+            }
         }
     }
+
 
     void Move()
     {
@@ -240,16 +375,34 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //void Jump()
+    //{
+    //    if (isGrounded) // Only allow jumping if grounded
+    //    {
+    //        characterAnimator.SetIsJumping(true);
+    //        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); // Use velocity instead of linearVelocity for accurate physics
+    //        isGrounded = false;
+    //    }
+    //}
+
+
     void Jump()
     {
-        if (isGrounded) // Only allow jumping if grounded
+        if (isClimbing)
         {
-            characterAnimator.SetIsJumping(true);
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); // Use velocity instead of linearVelocity for accurate physics
+            // If jumping while climbing, stop climbing and apply jump force
+            StopClimbing(); // Stop climbing immediately
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); // Apply the jump force
+            characterAnimator.SetIsJumping(true); // Play jump animation
+        }
+        else if (isGrounded)
+        {
+            // Normal jump when grounded
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); // Apply the jump force
+            characterAnimator.SetIsJumping(true); // Play jump animation
             isGrounded = false;
         }
     }
-
     IEnumerator Dash()
     {
         isDashing = true;
@@ -319,11 +472,130 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckGrounded()
     {
-        Vector2 feetPosition = new Vector2(transform.position.x, transform.position.y - 0.3f); // Adjust if needed
-        float checkRadius = 0.2f;
-        isGrounded = Physics2D.OverlapCircle(feetPosition, checkRadius, LayerMask.GetMask("Ground"));
+        float rayLength = 0.3f;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, rayLength, LayerMask.GetMask("Ground"));
 
-        Debug.DrawRay(transform.position, Vector2.down * 0.5f, isGrounded ? Color.green : Color.red);
+        isGrounded = hit.collider != null;
+
+        Debug.DrawRay(transform.position, Vector2.down * rayLength, isGrounded ? Color.green : Color.red);
+        Debug.Log($"Grounded: {isGrounded} | Hit: {(hit.collider != null ? hit.collider.gameObject.name : "None")}");
     }
-}
 
+    void StartClimbing()
+    {
+        isClimbing = true;
+        rb.gravityScale = 0; // Disable gravity while climbing
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0); // Stop vertical movement
+
+        // Start the climbing animation and resume it by setting speed to normal
+        characterAnimator.SetIsClimbing(true);
+        characterAnimator.SetAnimatorSpeed(climbAnimSpeed); // Resume normal animation speed
+    }
+
+    void PauseClimbing()
+    {
+        // Pause the climbing animation by setting the speed to 0
+        characterAnimator.SetAnimatorSpeed(0); // This pauses the climbing animation
+    }
+
+    //void Climb()
+    //{
+    //    float verticalInput = Input.GetAxisRaw("Vertical");
+
+    //    if (verticalInput != 0)
+    //    {
+    //        // Move the player vertically on the ladder
+    //        rb.linearVelocity = new Vector2(rb.linearVelocity.x, verticalInput * climbSpeed);
+
+    //        // Set climbing animation (you can modify this to include climbing up/down animations)
+    //        characterAnimator.SetIsClimbing(true);
+    //    }
+    //    else
+    //    {
+    //        // If no vertical input, stop vertical movement, but remain on the ladder
+    //        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0); // Stop vertical movement
+    //        characterAnimator.SetIsClimbing(false);
+    //    }
+
+    //    // Check if the player has reached the top or bottom of the ladder
+    //    if (transform.position.y >= topLadderYPosition) // You can adjust topLadderYPosition to suit your ladder's end position
+    //    {
+    //        isClimbing = false;
+    //        rb.gravityScale = 2f; // Restore gravity
+    //        characterAnimator.SetIsClimbing(false);
+    //    }
+
+    //    if (transform.position.y <= bottomLadderYPosition) // Adjust this for the bottom of the ladder
+    //    {
+    //        isClimbing = false;
+    //        rb.gravityScale = 2f; // Restore gravity
+    //        characterAnimator.SetIsClimbing(false);
+    //    }
+    //}
+
+    void Climb()
+    {
+        float verticalInput = Input.GetAxisRaw("Vertical");
+
+        if (verticalInput != 0)
+        {
+            // Move the player vertically on the ladder
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, verticalInput * climbSpeed);
+            characterAnimator.SetIsClimbing(true); // Keep climbing animation
+        }
+        else
+        {
+            // Pause the climbing animation (still on the ladder, just not moving)
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0); // Stop vertical movement
+            characterAnimator.SetIsClimbing(true); // Keep the climbing animation active
+        }
+
+        // Check if the player has reached the top or bottom of the ladder
+        if (transform.position.y >= topLadderYPosition) // Adjust this based on the ladder top position
+        {
+            StopClimbing();
+        }
+
+        if (transform.position.y <= bottomLadderYPosition) // Adjust this based on the ladder bottom position
+        {
+            StopClimbing();
+        }
+    }
+
+
+    void StopClimbing()
+    {
+        isClimbing = false;
+        rb.gravityScale = 2f; // Restore gravity when not climbing
+        characterAnimator.SetIsClimbing(false); // Stop climbing animation
+        characterAnimator.SetAnimatorSpeed(1); // Reset animation speed to normal if not paused
+    }
+
+    void StartClimbingDown()
+    {
+        // Handle climbing down, similar to normal climbing logic but with downward movement
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, -climbSpeed);
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Ladder"))
+        {
+            canClimb = true; // Allow climbing
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Ladder"))
+        {
+            canClimb = false;
+            isClimbing = false;
+            rb.gravityScale = 2f; // Restore gravity when leaving ladder
+            characterAnimator.SetIsClimbing(false);
+        }
+    }
+
+
+}

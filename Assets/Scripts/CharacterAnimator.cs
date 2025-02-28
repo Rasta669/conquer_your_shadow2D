@@ -42,5 +42,10 @@ public class CharacterAnimator : MonoBehaviour
         animator.SetTrigger("Dash");
     }
 
+    public void SetAnimatorSpeed(float speed)
+    {
+        Animator anim = GetComponent<Animator>();
+        anim.speed = speed; // This sets the animation speed (0 pauses, 1 resumes)
+    }
 
 }

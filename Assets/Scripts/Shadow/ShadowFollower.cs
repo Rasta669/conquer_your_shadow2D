@@ -18,6 +18,8 @@ public class ShadowFollower : MonoBehaviour
     private CharacterAnimator characterAnimator;
     private bool isDead = false;
 
+    
+
     private class MovementData
     {
         public Vector2 position;
@@ -56,6 +58,7 @@ public class ShadowFollower : MonoBehaviour
         data.dashed = dashed;
         data.isRunning = isRunning;
         data.direction = direction;
+        //data.isClimbing = isClimbing;
 
         currentIndex = (currentIndex + 1) % maxStoredPositions;
         totalStored = Mathf.Min(totalStored + 1, maxStoredPositions);
