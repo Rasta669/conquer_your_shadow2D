@@ -48,4 +48,15 @@ public class CharacterAnimator : MonoBehaviour
         anim.speed = speed; // This sets the animation speed (0 pauses, 1 resumes)
     }
 
+    public void SetIsWalking(bool isWalking)
+    {
+        animator.SetBool("IsWalking", isWalking);
+    }
+
+    public void PlayIdleAnimation()
+    {
+        animator.SetTrigger("Idle");
+    }
+
+
 }
