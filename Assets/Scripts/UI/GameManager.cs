@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -10,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     private bool isPaused = false;
     private bool isGameOver = false;
+    private bool isGameWon = false;
     private UIDocument uiDocument;
 
     // UI Elements
@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private VisualElement controllerUI;
     private VisualElement instructionsUI;
     private VisualElement gameModePage;
+    private VisualElement youWinPage;
 
     private Slider contrastSlider;
     private Slider brightnessSlider;
@@ -33,39 +34,17 @@ public class GameManager : MonoBehaviour
 
     private Stack<VisualElement> menuHistory = new Stack<VisualElement>(); // Track menu navigation
 
-    //void Awake()
-    //{
-    //    if (Instance == null)
-    //    {
-    //        Instance = this;
-    //        DontDestroyOnLoad(gameObject);
-    //        SceneManager.sceneLoaded += OnSceneLoaded;
-    //    }
-    //    else
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
-
-    //public static GameManager Instance;
-
     public enum GameMode { Race, Survival }
     public GameMode currentMode = GameMode.Race; // Default mode
 
     public float shadowSpeed = 5f; // Public parameter to modify in Inspector
 
-    //private void Awake()
-    //{
-    //    if (Instance == null)
-    //    {
-    //        Instance = this;
-    //        DontDestroyOnLoad(gameObject);
-    //    }
-    //    else
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
+    // Race mode variables
+    private float raceTime = 0f;
+    private int score = 0;
+    private bool isRacing = false;
+    private Label timeLabel;
+    private Label scoreLabel;
 
     private void Awake()
     {
@@ -73,7 +52,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded; // Make sure this line is uncommented
+            SceneManager.sceneLoaded += OnSceneLoaded; // Ensure this is active
         }
         else
         {
@@ -81,17 +60,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    public void SetGameMode(int mode)
+    private void Update()
     {
-        currentMode = (GameMode)mode; // Convert int to enum
-        StartGame();
-        //SceneManager.LoadScene("GameScene"); // Reloads scene with selected mode
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (isRacing && currentMode == GameMode.Race)
+        {
+            raceTime += Time.deltaTime;
+            UpdateRaceUI();
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -117,27 +92,45 @@ public class GameManager : MonoBehaviour
         controllerUI = root.Q<VisualElement>("ControllerPage");
         instructionsUI = root.Q<VisualElement>("InstructionsPage");
         gameModePage = root.Q<VisualElement>("GameModesPage");
+        youWinPage = root.Q<VisualElement>("YouWinMenu");
 
         contrastSlider = settingsUI.Q<Slider>("Contrast");
         brightnessSlider = settingsUI.Q<Slider>("Brightness");
         fullscreenRadioButton = videoSettingsUI.Q<RadioButton>("Fullscreen");
 
-
-
-        if (contrastSlider != null) contrastSlider.RegisterValueChangedCallback(evt => AdjustContrast(evt.newValue));
-        if (brightnessSlider != null) brightnessSlider.RegisterValueChangedCallback(evt => AdjustBrightness(evt.newValue));
-        if (fullscreenRadioButton != null) fullscreenRadioButton.RegisterValueChangedCallback(evt => ToggleFullscreen(evt.newValue));
+        if (contrastSlider != null)
+            contrastSlider.RegisterValueChangedCallback(evt => AdjustContrast(evt.newValue));
+        if (brightnessSlider != null)
+            brightnessSlider.RegisterValueChangedCallback(evt => AdjustBrightness(evt.newValue));
+        if (fullscreenRadioButton != null)
+            fullscreenRadioButton.RegisterValueChangedCallback(evt => ToggleFullscreen(evt.newValue));
 
         // Back button handling
         Button backButton = settingsUI.Q<Button>("BackButton");
         if (backButton != null)
             backButton.clicked += Back;
 
+        // Race mode UI element (using a single label to display either time or score)
+        timeLabel = pauseMenuUI.Q<Label>("Scoretext");
+        scoreLabel = pauseMenuUI.Q<Label>("Scoretext");
+        if (timeLabel == null)
+        {
+            Debug.LogError("ScoreText label not found in the UI Document!");
+        }
+        else
+        {
+            Debug.Log("ScoreText label found: " + timeLabel);
+            timeLabel.text = "Test Update";
+            timeLabel.MarkDirtyRepaint();
+        }
+
+
         ResetUI();
 
         Time.timeScale = 0f; // Start paused
         isPaused = true;
         isGameOver = false;
+        isGameWon = false;
     }
 
     private void ResetUI()
@@ -158,28 +151,46 @@ public class GameManager : MonoBehaviour
 
         menuHistory.Clear();
         menuHistory.Push(mainMenuUI); // Start from the main menu
+
+        // Reset race mode data
+        ResetGameState();
     }
 
-    //public void StartGame()
-    //{
-    //    Debug.Log("Game Started!");
-    //    mainMenuUI.style.display = DisplayStyle.None;
-    //    ShowMenu(pauseMenuUI, true); // Hide all menus
-    //    Time.timeScale = 1f;
-    //    isPaused = false;
-    //    isGameOver = false;
-    //    ShowMenu(pauseMenuUI, true); // Hide all menus
-    //    //pauseMenuUI.style.display = DisplayStyle.Flex;        
-    //}
+    // Overridden ResetGameState to reset race time and score
+    private void ResetGameState()
+    {
+        Debug.Log("Game state reset before returning to Main Menu.");
+        raceTime = 0f;
+        score = 0;
+        isRacing = false;
+        UpdateRaceUI();
+    }
+
+    public void SetGameMode(int mode)
+    {
+        currentMode = (GameMode)mode; // Convert int to enum
+        StartGame();
+    }
+
     public void StartGame()
     {
         Debug.Log("Game Started!");
         Debug.Log("Starting game with mode: " + currentMode);
-        mainMenuUI.style.display = DisplayStyle.None;
-        gameModePage.style.display= DisplayStyle.None;
+        if (mainMenuUI != null)
+            mainMenuUI.style.display = DisplayStyle.None;
+        if (gameModePage != null)
+            gameModePage.style.display = DisplayStyle.None;
+
+        // Reset race mode values
+        raceTime = 0f;
+        score = 0;
+        isRacing = (currentMode == GameMode.Race);
+
         Time.timeScale = 1f; // Resume time
-        isPaused = false; // Set game state
-        isGameOver = false; // Reset game over state
+        isPaused = false;
+        isGameOver = false;
+        isGameWon = false;
+        UpdateRaceUI(); // Immediately update the label based on the mode
         ShowMenu(pauseMenuUI, true); // Hide all menus                 
     }
 
@@ -208,7 +219,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-
     public void ShowMenu(VisualElement menu, bool isPauseMenu = false)
     {
         if (menuHistory.Count > 0)
@@ -221,67 +231,53 @@ public class GameManager : MonoBehaviour
 
             // Only pause the game if it's NOT the Pause menu
             if (!isPauseMenu)
-            {
-                Time.timeScale = 0f; // Pause game for other menus
-            }
+                Time.timeScale = 0f;
         }
         else
         {
             menuHistory.Clear();
-            Time.timeScale = 1f; // Resume game when no menus are open
+            Time.timeScale = 1f;
         }
     }
 
     public void ShowVideoSettings() => ShowMenu(videoSettingsUI);
     public void ShowSettingsPage() => ShowMenu(settingsUI);
     public void ShowGraphicsPage() => ShowMenu(graphicsUI);
-    public void ShowAudioSettings() => ShowMenu(audioSettingsUI); // Add this method
+    public void ShowAudioSettings() => ShowMenu(audioSettingsUI);
 
-    public void ShowAchievementsUI()
-    {
-        ShowMenu(achievemntsUI);
-    }
+    public void ShowAchievementsUI() => ShowMenu(achievemntsUI);
+    public void ShowControllerUI() => ShowMenu(controllerUI);
+    public void ShowInstructionsUi() => ShowMenu(instructionsUI);
 
-    public void ShowControllerUI()
+    public void Back()
     {
-        ShowMenu(controllerUI);
-    }
-
-    public void ShowInstructionsUi()
-    {
-        ShowMenu(instructionsUI);
-    }
-
-    public void Back() // Add back functionality
-    {
-        if (menuHistory.Count > 1) // Ensure there's a previous menu
+        if (menuHistory.Count > 1)
         {
             VisualElement currentMenu = menuHistory.Pop();
-            currentMenu.style.display = DisplayStyle.None; // Hide current menu
+            currentMenu.style.display = DisplayStyle.None;
             VisualElement previousMenu = menuHistory.Peek();
-            previousMenu.style.display = DisplayStyle.Flex; // Show previous menu
+            previousMenu.style.display = DisplayStyle.Flex;
             Debug.Log("Returning to previous menu: " + previousMenu.name);
         }
         else
         {
-            // If there's no previous menu, return to the main menu
             ShowMenu(mainMenuUI);
         }
     }
 
     public void PauseGame()
     {
-        Time.timeScale = 0f; // Freeze game time
-        ShowMenu(resumeMenuUI); 
+        Time.timeScale = 0f;
+        ShowMenu(resumeMenuUI);
         Debug.Log("Game Paused");
     }
 
     public void AdjustContrast(float value) => RenderSettings.ambientIntensity = value;
     public void AdjustBrightness(float value) => RenderSettings.ambientLight = new Color(value, value, value);
+
     public void ToggleFullscreen(bool isFullscreen)
     {
-        Debug.Log("ToggleFullscreen called! New State: " + isFullscreen); // Confirm method is called
-
+        Debug.Log("ToggleFullscreen called! New State: " + isFullscreen);
         if (isFullscreen)
         {
             Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
@@ -292,19 +288,13 @@ public class GameManager : MonoBehaviour
             Screen.fullScreenMode = FullScreenMode.Windowed;
             Screen.SetResolution(1280, 720, false);
         }
-
         Debug.Log($"Fullscreen: {Screen.fullScreen}, Mode: {Screen.fullScreenMode}, Resolution: {Screen.currentResolution.width}x{Screen.currentResolution.height}");
     }
 
     public void ReturnToMainMenu()
     {
-        // Stop time so the game doesn’t continue running
         Time.timeScale = 0f;
-
-        // Optionally, reset necessary game states here
         ResetGameState();
-
-        // Load the Main Menu scene
         SceneManager.LoadScene("GameScene");
     }
 
@@ -314,15 +304,51 @@ public class GameManager : MonoBehaviour
         ShowMenu(pauseMenuUI, true);
     }
 
-    private void ResetGameState()
-    {
-        // Example: Reset player health, score, or other persistent states
-        Debug.Log("Game state reset before returning to Main Menu.");
-    }
-
     public void ShowGameModemenu()
     {
         Debug.Log("Start Button Clicked! Showing Game Mode Menu...");
-        GameManager.Instance.ShowMenu(gameModePage);
+        ShowMenu(gameModePage);
+    }
+
+    // Race mode specific methods
+    private void UpdateRaceUI()
+    {
+        // Determine what text to show based on the current mode
+        string displayText = "";
+        if (currentMode == GameMode.Race)
+        {
+            displayText = "Time: " + raceTime.ToString("F2");
+        }
+        else if (currentMode == GameMode.Survival)
+        {
+            displayText = "Score: " + score;
+        }
+
+        Debug.Log("Updating Race UI with text: " + displayText);
+
+        // Update the single UI element (both labels reference the same element)
+        if (timeLabel != null)
+            timeLabel.text = displayText;
+        if (scoreLabel != null && scoreLabel != timeLabel)
+            scoreLabel.text = displayText;
+    }
+
+    public void IncrementScore()
+    {
+        score++;
+        UpdateRaceUI();
+    }
+
+    public void EndGame()
+    {
+        isRacing = false;
+        Time.timeScale = 0f;
+    }
+    public void GameWin()
+    {
+        Debug.Log("Game Won!");
+        isGameWon = true;
+        Time.timeScale = 0f;
+        ShowMenu(youWinPage);
     }
 }

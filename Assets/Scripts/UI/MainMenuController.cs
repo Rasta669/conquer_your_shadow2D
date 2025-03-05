@@ -16,6 +16,7 @@ public class MainMenuController : MonoBehaviour
     private VisualElement controllerUI;
     private VisualElement instructionsUI;
     private VisualElement gameModePage; 
+    private VisualElement youWinPage; 
 
     private UIDocument uiDocument;
 
@@ -37,14 +38,17 @@ public class MainMenuController : MonoBehaviour
         controllerUI = root.Q<VisualElement>("ControllerPage");
         instructionsUI = root.Q<VisualElement>("InstructionsPage");
         gameModePage = root.Q<VisualElement>("GameModesPage");
+        youWinPage = root.Q<VisualElement>("YouWinMenu");
 
 
         Button startButton = mainMenu.Q<Button>("StartButton");
         Button raceButton  = gameModePage.Q<Button>("RaceButton");
         Button survivalButton = gameModePage.Q<Button>("SurvivalButton");
+        Button backButtonGM = gameModePage.Q<Button>("BackButton");
         Button pauseButton = pauseMenu.Q<Button>("PauseButton");
         Button resumeButton = resumeMenu.Q<Button>("ResumeButton");
         Button restarteButtonPs = resumeMenu.Q<Button>("RestartButton");
+        Button restarteButtonYW = youWinPage.Q<Button>("RestartButton");
         Button optionsButton = mainMenu.Q<Button>("OptionsButton");
         Button achievemntsButton = mainMenu.Q<Button>("AchievemntsButton");
         Button audioButton = optionsMenu.Q<Button>("AudioButton");
@@ -70,6 +74,7 @@ public class MainMenuController : MonoBehaviour
         Button RMMS = settingsUI.Q<Button>("RmainMenuButton");
         Button RMMPs = resumeMenu.Q<Button>("RmainMenuButton");
         Button RMMGs = graphicsUI.Q<Button>("RmainMenuButton");
+        Button RMMYw = youWinPage.Q<Button>("RmainMenuButton");
         //Button RMMAch = achievemntsUI.Q<Button>("RmainMenuButton");
         Button RMMInstr = instructionsUI.Q<Button>("RmainMenuButton");
         Button RMMContrll = controllerUI.Q<Button>("RmainMenuButton");
@@ -87,10 +92,12 @@ public class MainMenuController : MonoBehaviour
         instructionsButton.clicked += ShowInstructionsUI;
         controllerButton.clicked += ShowControllerUI;
         restartButtonGO.clicked += Restart;
+        restarteButtonYW.clicked += Restart;
         settingsButton.clicked += OpenSettingsPage;
         graphicsButton.clicked += OpenGraphicsPage;
         quitButton.clicked += QuitGame;
         audioButton.clicked += OpenAudioSettings;
+        backButtonGM.clicked += GoBack;
         backButtonGO.clicked += GoBack;
         backButtonOp.clicked += GoBack;
         backButtonAud.clicked += GoBack;
@@ -109,6 +116,7 @@ public class MainMenuController : MonoBehaviour
         RMMGs.clicked += ReturnToMainMenu;
         RMMInstr.clicked += ReturnToMainMenu;
         RMMContrll.clicked += ReturnToMainMenu;
+        RMMYw.clicked += ReturnToMainMenu;
         //fullscreenRadioButton.clicked += () => ToggleFullscreen(!Screen.fullScreen);
 
         // Back button for the main menu to return to main page

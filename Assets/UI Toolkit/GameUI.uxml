@@ -18,10 +18,10 @@
         <ui:Button text="Instructions" name="InstructionsButton" class="button" style="top: 403px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 76px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px;" />
         <ui:Button text="Back" name="BackButton" class="button" style="top: 609px; width: 289px; right: auto; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; height: 76px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; translate: 839px -156px;" />
     </ui:VisualElement>
-    <ui:VisualElement name="PauseMENU" class="basePage" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgba(255, 255, 255, 0); display: flex;">
+    <ui:VisualElement name="PauseMENU" class="basePage" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgba(255, 255, 255, 0); display: none; font-size: 30px;">
         <ui:Button text="Pause&#10;" name="PauseButton" enable-rich-text="false" class="button" style="width: 197px; right: -924px;" />
-        <ui:Label text="Score:" name="Scoretext" class="score" style="width: 155px; top: -63px;" />
-        <ui:Label text="Portal key:" name="Keytext" class="score" style="width: 424px; top: -61px; background-color: rgba(197, 148, 148, 0); -unity-text-align: upper-left; color: rgb(212, 212, 212);" />
+        <ui:Label text="Score:" name="Scoretext" class="score" style="width: 421px; top: -63px; -unity-text-align: upper-left; background-color: rgba(207, 173, 173, 0); color: rgb(204, 184, 184); font-size: 30px;" />
+        <ui:Label text="Portal key:" name="Keytext" class="score" style="width: 424px; top: -61px; background-color: rgba(197, 148, 148, 0); -unity-text-align: upper-left; color: rgb(212, 212, 212); font-size: 30px;" />
     </ui:VisualElement>
     <ui:VisualElement name="ResumeMenu" class="basePage" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.16); display: none;">
         <ui:Button text="Resume" name="ResumeButton" class="button" style="top: 474px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 76px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px;" />
@@ -109,5 +109,13 @@
         <ui:Label text="This page is under development" style="top: 90px; height: 213px; width: 1681px; right: -189px; font-size: 40px; color: rgb(176, 142, 142);" />
         <ui:Button text="Back" name="BackButton" class="button" style="top: 708px; width: 289px; right: 239px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; height: 76px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; translate: 839px -156px;" />
         <ui:Button text="Return to main menu" name="RmainMenuButton" class="button" style="top: 628px; width: 473px; right: -224px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; height: 76px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; translate: 839px -156px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="YouWinMenu" class="basePage" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.1); display: none;">
+        <ui:Button text="Leaderboard" name="LeaderboardButton" class="button" style="top: 594px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 76px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px;" />
+        <ui:Button text="Restart" name="RestartButton" class="button" style="top: 634px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 76px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px;" />
+        <ui:Button text="Back to main menu" name="RmainMenuButton" class="button" style="top: 674px; width: 527px; right: 89px; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 76px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px;" />
+        <ui:Label text="Your score:" name="YourScoreText" class="OptionHeader" style="top: 48px; width: 1149px; font-size: 60px;" />
+        <ui:Label text="Amazing, You just Conquered your shadow level 1" name="YouWinText" style="top: -175px; height: 183px; font-size: 60px; -unity-text-align: upper-left; width: 1771px; right: -196px; color: rgb(255, 247, 247);" />
+        <ui:Label text="Follow us on our social media for more level updates" name="FollowText" style="top: 384px; height: 120px; font-size: 60px; width: 1969px; color: rgb(224, 189, 189);" />
     </ui:VisualElement>
 </ui:UXML>

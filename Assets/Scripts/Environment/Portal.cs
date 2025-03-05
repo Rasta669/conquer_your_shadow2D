@@ -6,6 +6,16 @@ public class Portal : MonoBehaviour
     public string requiredKey = "PortalKey"; // Set in Inspector
     public Animator portalAnimator; // Assign in Inspector
     public Transform teleportDestination; // Set where the player should go
+    private GameManager gameManager;
+
+    private void Start()
+    {
+        gameManager = GameManager.Instance;
+        if (gameManager == null)
+        {
+            Debug.LogError("GameManager instance not found!");
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -33,5 +43,9 @@ public class Portal : MonoBehaviour
     {
         yield return new WaitForSeconds(1f); // Wait for animation to play
         player.position = teleportDestination.position; // Move player
+        if (gameManager != null)
+        {
+            gameManager.GameWin();
+        }
     }
 }
