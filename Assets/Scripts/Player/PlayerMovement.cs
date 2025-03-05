@@ -132,6 +132,22 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
     }
 
+    //IEnumerator RecordPosition()
+    //{
+    //    while (true)
+    //    {
+    //        if (shadowFollower != null)
+    //        {
+    //            bool isRunning = Mathf.Abs(rb.linearVelocity.x) > 0 && isGrounded;
+    //            bool jumped = !isGrounded && rb.linearVelocity.y > 0.1f;
+
+    //            // Store player's position, movement, and facing direction
+    //            shadowFollower.StorePosition(rb.position, rb.linearVelocity, jumped, isDashing, isRunning, lastDirection);
+    //        }
+    //        yield return new WaitForSeconds(positionRecordInterval);
+    //    }
+    //}
+
     IEnumerator RecordPosition()
     {
         while (true)
@@ -140,13 +156,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 bool isRunning = Mathf.Abs(rb.linearVelocity.x) > 0 && isGrounded;
                 bool jumped = !isGrounded && rb.linearVelocity.y > 0.1f;
+                bool climbing = isClimbing; // Capture climbing state
 
-                // Store player's position, movement, and facing direction
-                shadowFollower.StorePosition(rb.position, rb.linearVelocity, jumped, isDashing, isRunning, lastDirection);
+                shadowFollower.StorePosition(rb.position, rb.linearVelocity, jumped, isDashing, isRunning, lastDirection, climbing);
             }
             yield return new WaitForSeconds(positionRecordInterval);
         }
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -155,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = true;
             characterAnimator.SetIsJumping(false); // Reset jump animation on landing
         }
-        else if (collision.gameObject.CompareTag("Obstacle"))
+        else if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Shadow"))
         {
             Die();
         }

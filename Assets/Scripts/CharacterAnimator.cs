@@ -24,6 +24,10 @@ public class CharacterAnimator : MonoBehaviour
     public void SetIsClimbing (bool isClimbing)
     {
         animator.SetBool("IsClimbing", isClimbing);
+        if (isClimbing)
+        {
+            animator.Play("sh_climb");  // Make sure "Climb" exists in the Animator
+        }
     }
 
     // Call this to play death animation
