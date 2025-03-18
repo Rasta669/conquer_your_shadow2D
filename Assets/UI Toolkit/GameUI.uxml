@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/BasePage.uss?fileID=7433441132597879392&amp;guid=f41bb09077e3c23448331ebf148fe58d&amp;type=3#BasePage" />
-    <ui:VisualElement name="CQYS_startPage" class="basePage" style="flex-grow: 1; display: none;">
+    <ui:VisualElement name="CQYS_startPage" class="basePage backround" style="flex-grow: 1; display: none; background-image: url(&quot;project://database/Assets/Art&amp;Animations/UI/main%20menu%20interface/main%20menu%20interface/main%20menu0001.png?fileID=2800000&amp;guid=bc2d3a997c16b7b4fa9b95e30384a37d&amp;type=3#main menu0001&quot;); -unity-background-image-tint-color: rgba(255, 255, 255, 0.15);">
         <ui:Label text="Conquer your shadow2D" name="CQYS_header" class="header" style="height: 321px; top: 82px; font-size: 150px;" />
         <ui:Button text="Start Game" name="StartButton" class="button" style="top: 283px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 76px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px;" />
         <ui:Button text="Options&#10;" name="OptionsButton" class="button" style="top: 283px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 76px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -116px;" />
@@ -23,7 +23,7 @@
         <ui:Label text="Score:" name="Scoretext" class="score" style="width: 421px; top: -63px; -unity-text-align: upper-left; background-color: rgba(207, 173, 173, 0); color: rgb(204, 184, 184); font-size: 30px;" />
         <ui:Label text="Portal key:" name="Keytext" class="score" style="width: 424px; top: -61px; background-color: rgba(197, 148, 148, 0); -unity-text-align: upper-left; color: rgb(212, 212, 212); font-size: 30px;" />
     </ui:VisualElement>
-    <ui:VisualElement name="ResumeMenu" class="basePage" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.16); display: none;">
+    <ui:VisualElement name="ResumeMenu" class="basePage" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.16); display: none; background-image: url(&quot;project://database/Assets/Art&amp;Animations/UI/main%20menu%20interface/pausemenu/pause%20menu.png?fileID=2800000&amp;guid=39a35f2d3fe20854f89f70cdf899a099&amp;type=3#pause menu&quot;);">
         <ui:Button text="Resume" name="ResumeButton" class="button" style="top: 474px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 76px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px;" />
         <ui:Button text="Restart" name="RestartButton" class="button" style="top: 514px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 76px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px;" />
         <ui:Button text="Back to main menu" name="RmainMenuButton" class="button" style="top: 554px; width: 527px; right: 89px; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 76px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px;" />
@@ -45,7 +45,7 @@
         <ui:Slider label="Music Volume" value="42" high-value="100" name="MusicVolume" style="width: 948px; right: -663px; font-size: 40px; color: rgb(178, 174, 174); align-self: flex-start; top: 160px;" />
         <ui:Button text="Return to main menu" name="RmainMenuButton" class="button" style="top: 648px; width: 473px; right: -203px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; height: 76px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; translate: 839px -156px;" />
     </ui:VisualElement>
-    <ui:VisualElement name="GameModesPage" class="basePage" style="flex-grow: 1; display: none;">
+    <ui:VisualElement name="GameModesPage" class="basePage" style="flex-grow: 1; display: none; background-image: url(&quot;project://database/Assets/Art&amp;Animations/UI/main%20menu%20interface/main%20menu%20interface/main%20menu0045.png?fileID=2800000&amp;guid=4d45d2e7e949e66429d59d5449310909&amp;type=3#main menu0045&quot;);">
         <ui:Label text="Shadow mode" name="GamemodeText" class="OptionHeader" style="height: 180px; font-size: 100px; top: 65px; display: flex; width: 1961px;">
             <ui:VisualElement name="OptUnderline" style="flex-grow: 1; height: 46px; top: 144px; width: 1308px; right: -357px; max-height: 4px; background-color: rgb(0, 0, 0);" />
             <ui:VisualElement name="OptUnderline2" style="top: 287px; width: 289px; right: auto; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; height: 19px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; translate: 839px -156px; background-color: rgb(0, 0, 0);" />
@@ -118,4 +118,5 @@
         <ui:Label text="Amazing, You just Conquered your shadow level 1" name="YouWinText" style="top: -175px; height: 183px; font-size: 60px; -unity-text-align: upper-left; width: 1771px; right: -196px; color: rgb(255, 247, 247);" />
         <ui:Label text="Follow us on our social media for more level updates" name="FollowText" style="top: 384px; height: 120px; font-size: 60px; width: 1969px; color: rgb(224, 189, 189);" />
     </ui:VisualElement>
+    <ui:VisualElement name="Background" class="backround" style="flex-grow: 1; display: none;" />
 </ui:UXML>

@@ -20,6 +20,7 @@ public class MainMenuController : MonoBehaviour
 
     private UIDocument uiDocument;
 
+   
     private void OnEnable()
     {
         uiDocument = GetComponent<UIDocument>();
@@ -138,17 +139,19 @@ public class MainMenuController : MonoBehaviour
             Debug.LogError("Fullscreen RadioButton is NULL! Check UI Query.");
         }
 
+        
+        //ResetUI();
 
-        ResetUI();
     }
 
     private void ResetUI()
     {
-        mainMenu.style.display = DisplayStyle.Flex;
-        optionsMenu.style.display = DisplayStyle.None;
-        videoSettingsUI.style.display = DisplayStyle.None;
-        settingsUI.style.display = DisplayStyle.None;
-        graphicsUI.style.display = DisplayStyle.None;
+        //mainMenu.style.display = DisplayStyle.Flex;
+        //optionsMenu.style.display = DisplayStyle.None;
+        //videoSettingsUI.style.display = DisplayStyle.None;
+        //settingsUI.style.display = DisplayStyle.None;
+        //graphicsUI.style.display = DisplayStyle.None;
+        GameManager.Instance.ResetUI();
 
         Time.timeScale = 0f; // Ensure game is paused when in the menu
     }

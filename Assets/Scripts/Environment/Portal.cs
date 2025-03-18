@@ -24,6 +24,7 @@ public class Portal : MonoBehaviour
             PlayerInventory playerInventory = other.GetComponent<PlayerInventory>();
             if (playerInventory != null && playerInventory.HasKey(requiredKey))
             {
+                PlayKPortalSound();
                 OpenPortal(other.transform);
             }
             else
@@ -46,6 +47,18 @@ public class Portal : MonoBehaviour
         if (gameManager != null)
         {
             gameManager.GameWin();
+        }
+    }
+
+    private void PlayKPortalSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayPortalAnimationSound();
+        }
+        else
+        {
+            Debug.LogWarning("AudioManager instance is null! Make sure it's in the scene.");
         }
     }
 }

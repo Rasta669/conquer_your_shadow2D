@@ -45,6 +45,11 @@ public class GameManager : MonoBehaviour
     private bool isRacing = false;
     private Label timeLabel;
     private Label scoreLabel;
+    private Label winScoreLabel;
+
+    private UISpriteAnimation mainmenu_anim;
+    public GameObject main_menu_holder;
+
 
     private void Awake()
     {
@@ -52,7 +57,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded; // Ensure this is active
+            
+            SceneManager.sceneLoaded += OnSceneLoaded; // Ensure this is activ
         }
         else
         {
@@ -71,6 +77,7 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+
         uiDocument = FindObjectOfType<UIDocument>();
         if (uiDocument == null)
         {
@@ -113,6 +120,7 @@ public class GameManager : MonoBehaviour
         // Race mode UI element (using a single label to display either time or score)
         timeLabel = pauseMenuUI.Q<Label>("Scoretext");
         scoreLabel = pauseMenuUI.Q<Label>("Scoretext");
+        winScoreLabel = youWinPage.Q<Label>("YourScoreText");
         if (timeLabel == null)
         {
             Debug.LogError("ScoreText label not found in the UI Document!");
@@ -123,7 +131,9 @@ public class GameManager : MonoBehaviour
             timeLabel.text = "Test Update";
             timeLabel.MarkDirtyRepaint();
         }
-
+        //mainmenu_anim = main_menu_holder.GetComponent<UISpriteAnimation>();
+        //mainmenu_anim.Func_PlayUIAnim();
+        AudioManager.Instance.PlayMenuMusic();
 
         ResetUI();
 
@@ -133,9 +143,14 @@ public class GameManager : MonoBehaviour
         isGameWon = false;
     }
 
-    private void ResetUI()
+    public void ResetUI()
     {
-        if (mainMenuUI != null) mainMenuUI.style.display = DisplayStyle.Flex;
+        if (mainMenuUI != null)
+        {
+            mainMenuUI.style.display = DisplayStyle.Flex;
+            
+            
+        }
         if (optionsMenuUI != null) optionsMenuUI.style.display = DisplayStyle.None;
         if (pauseMenuUI != null) pauseMenuUI.style.display = DisplayStyle.None;
         if (resumeMenuUI != null) resumeMenuUI.style.display = DisplayStyle.None;
@@ -187,6 +202,9 @@ public class GameManager : MonoBehaviour
         isRacing = (currentMode == GameMode.Race);
 
         Time.timeScale = 1f; // Resume time
+        AudioManager.Instance.PlayGameplayMusic();
+        Debug.Log("Gameplay music!");
+        AudioManager.Instance.PlayWaterSound();
         isPaused = false;
         isGameOver = false;
         isGameWon = false;
@@ -207,6 +225,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game Over!");
         isGameOver = true;
+        AudioManager.Instance.PlayGameOverMusic();
         Time.timeScale = 0f;
         ShowMenu(gameOverUI);
     }
@@ -268,6 +287,7 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0f;
+        AudioManager.Instance.PlayPauseMusic();
         ShowMenu(resumeMenuUI);
         Debug.Log("Game Paused");
     }
@@ -301,6 +321,7 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1f;
+        AudioManager.Instance.PlayGameplayMusic();
         ShowMenu(pauseMenuUI, true);
     }
 
@@ -348,7 +369,31 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game Won!");
         isGameWon = true;
-        Time.timeScale = 0f;
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayGameWinMusic(); // This should only be called here when the game is actually won
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Debug.LogWarning("AudioManager instance is null! Make sure it's in the scene.");
+        }
+        
         ShowMenu(youWinPage);
+
+        string displayText = "";
+
+        if (currentMode == GameMode.Race)
+        {
+            displayText = "Time used: " + raceTime.ToString("F2");
+        }
+        else if (currentMode == GameMode.Survival)
+        {
+            displayText = "Your Score: " + score;
+        }
+
+        if (winScoreLabel != null)
+            winScoreLabel.text = displayText;
+        
     }
 }

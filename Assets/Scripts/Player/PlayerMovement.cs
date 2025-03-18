@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Animation")]
     public float walkSpeed = 3f;
     public float runSpeed = 6f;
     public float jumpForce = 10f;
@@ -13,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float topLadderYPosition = 10f; // Set the Y position where the top of the ladder is
     public float bottomLadderYPosition = 0f; // Set the Y position where the bottom of the ladder is
 
+    
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool isDashing;
@@ -25,6 +27,21 @@ public class PlayerMovement : MonoBehaviour
     private bool isClimbing = false;
     private bool canClimb = false;
     private float climbAnimSpeed = 1f; // Store normal climbing animation speed
+
+    [Header("Waterfall")]
+    // Waterfall sound variables
+    public Transform waterfall; // Assign the waterfall GameObject's transform in Inspector
+    public float waterfallRange = 5f; // Max distance where sound starts fading in/out
+
+
+    [Header("Particle Effects")]
+    //[Range(0,10)]
+    //public int occurAfterVelocity;
+    //private float particleCounter;
+    //[Range(0, 0.2f)]
+    //public float dustFormationPeriod;
+    public ParticleSystem fallParticle;
+    public ParticleSystem bloodParticle;
 
     void Start()
     {
@@ -75,11 +92,13 @@ public class PlayerMovement : MonoBehaviour
                 StopClimbing();
             }
         }
+        UpdateWaterfallSound();
     }
 
 
     void Move()
     {
+        //particleCounter += Time.deltaTime;
         float moveInput = Input.GetAxisRaw("Horizontal");
         float speed = Input.GetKey(KeyCode.LeftControl) ? walkSpeed : runSpeed;
 
@@ -96,6 +115,11 @@ public class PlayerMovement : MonoBehaviour
         if (moveInput != 0 && isGrounded)
         {
             characterAnimator.SetIsRunning(true);
+            //if (Mathf.Abs(rb.linearVelocityX)  < occurAfterVelocity){
+            //    if (particleCounter > dustFormationPeriod) {
+            //        dustParticle.Play();
+            //    }
+            //}
         }
         else
         {
@@ -169,6 +193,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
+            fallParticle.Play();
             isGrounded = true;
             characterAnimator.SetIsJumping(false); // Reset jump animation on landing
         }
@@ -194,6 +219,7 @@ public class PlayerMovement : MonoBehaviour
 
         isDead = true;
         rb.linearVelocity = Vector2.zero; // Stop movement
+        bloodParticle.Play();
         characterAnimator.PlayDeathAnimation(); // Trigger death animation
         StartCoroutine(HandleGameOver());
     }
@@ -299,5 +325,24 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void UpdateWaterfallSound()
+    {
+        if (waterfall == null || AudioManager.Instance == null || AudioManager.Instance.waterSound == null)
+            return;
+
+        float distance = Mathf.Abs(transform.position.x - waterfall.position.x);
+        float volume = Mathf.Clamp01(1 - (distance / waterfallRange));
+
+        AudioManager.Instance.waterSound.volume = volume;
+
+        if (!AudioManager.Instance.waterSound.isPlaying && volume > 0)
+        {
+            AudioManager.Instance.waterSound.Play();
+        }
+        else if (volume == 0)
+        {
+            AudioManager.Instance.waterSound.Stop();
+        }
+    }
 
 }
