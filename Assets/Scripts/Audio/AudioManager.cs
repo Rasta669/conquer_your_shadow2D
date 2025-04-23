@@ -7,10 +7,10 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
     public AudioMixer audioMixer; // Drag & Drop your Unity Audio Mixer
 
-    public UIDocument uiDocument;
-    private Slider masterVolumeSlider;
-    private Slider musicVolumeSlider;
-    private Slider effectsVolumeSlider;
+    //public UIDocument uiDocument;
+    //private Slider masterVolumeSlider;
+    //private Slider musicVolumeSlider;
+    //private Slider effectsVolumeSlider;
 
     // Music
     public AudioSource menuMusic;
@@ -46,19 +46,19 @@ public class AudioManager : MonoBehaviour
 
     private void OnEnable()
     {
-        uiDocument = uiDocument.GetComponent<UIDocument>();
-        var root = uiDocument.rootVisualElement;
-        root = root.Q<VisualElement>("AudioPage");
+        //uiDocument = uiDocument.GetComponent<UIDocument>();
+        //var root = uiDocument.rootVisualElement;
+        //root = root.Q<VisualElement>("AudioPage");
 
-        // Get the Sliders from Audio Page
-        masterVolumeSlider = root.Q<Slider>("MasterVolume");
-        musicVolumeSlider = root.Q<Slider>("MusicVolume");
-        effectsVolumeSlider = root.Q<Slider>("EffectsrVolume");
+        //// Get the Sliders from Audio Page
+        //masterVolumeSlider = root.Q<Slider>("MasterVolume");
+        //musicVolumeSlider = root.Q<Slider>("MusicVolume");
+        //effectsVolumeSlider = root.Q<Slider>("EffectsrVolume");
 
-        // Add listeners
-        masterVolumeSlider.RegisterValueChangedCallback(evt => SetMasterVolume(evt.newValue));
-        musicVolumeSlider.RegisterValueChangedCallback(evt => SetMusicVolume(evt.newValue));
-        effectsVolumeSlider.RegisterValueChangedCallback(evt => SetEffectsVolume(evt.newValue));
+        //// Add listeners
+        //masterVolumeSlider.RegisterValueChangedCallback(evt => SetMasterVolume(evt.newValue));
+        //musicVolumeSlider.RegisterValueChangedCallback(evt => SetMusicVolume(evt.newValue));
+        //effectsVolumeSlider.RegisterValueChangedCallback(evt => SetEffectsVolume(evt.newValue));
     }
 
     public void SetMasterVolume(float volume)

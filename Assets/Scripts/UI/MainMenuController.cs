@@ -20,7 +20,7 @@ public class MainMenuController : MonoBehaviour
 
     private UIDocument uiDocument;
 
-   
+
     private void OnEnable()
     {
         uiDocument = GetComponent<UIDocument>();
@@ -69,7 +69,8 @@ public class MainMenuController : MonoBehaviour
         Button backButtonAch = achievemntsUI.Q<Button>("BackButton");
         Button backButtonInstr = instructionsUI.Q<Button>("BackButton");
         Button backButtonContrll = controllerUI.Q<Button>("BackButton");
-        Button RMMGO = gameOverMenu.Q<Button>("RmainMenuButton"); // need to edit game logic to restart
+        Button RMMGO = gameOverMenu.Q<Button>("RmainMenuButton"); 
+        Button connectBtn = gameOverMenu.Q<Button>("ConnectButton");
         Button RMMAud = audioSettingsUI.Q<Button>("RmainMenuButton");
         Button RMMVS = videoSettingsUI.Q<Button>("RmainMenuButton");
         Button RMMS = settingsUI.Q<Button>("RmainMenuButton");
@@ -80,6 +81,8 @@ public class MainMenuController : MonoBehaviour
         Button RMMInstr = instructionsUI.Q<Button>("RmainMenuButton");
         Button RMMContrll = controllerUI.Q<Button>("RmainMenuButton");
         RadioButton fullscreenRadioButton = videoSettingsUI.Q<RadioButton>("FullOrWindowed");
+        Button ConnectButton = gameOverMenu.Q<Button>("ConnectButton");
+        Button DisconnectButton = gameOverMenu.Q<Button>("DisConnectButton");
 
         startButton.clicked += ShowGameModemenu;
         raceButton.clicked += SetRaceMode;
@@ -118,6 +121,8 @@ public class MainMenuController : MonoBehaviour
         RMMInstr.clicked += ReturnToMainMenu;
         RMMContrll.clicked += ReturnToMainMenu;
         RMMYw.clicked += ReturnToMainMenu;
+        ConnectButton.clicked += ConnectWeb3;
+        DisconnectButton.clicked += DisconnectWeb3;
         //fullscreenRadioButton.clicked += () => ToggleFullscreen(!Screen.fullScreen);
 
         // Back button for the main menu to return to main page
@@ -230,5 +235,15 @@ public class MainMenuController : MonoBehaviour
     void ShowGameModemenu()
     {
         GameManager.Instance.ShowGameModemenu();
+    }
+
+    void ConnectWeb3()
+    {
+        GameManager.Instance.Connect();
+    }
+
+    void DisconnectWeb3()
+    {
+        GameManager.Instance.Disconnect();  
     }
 }

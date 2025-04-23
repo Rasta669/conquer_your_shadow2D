@@ -6,11 +6,11 @@ public class Portal : MonoBehaviour
     public string requiredKey = "PortalKey"; // Set in Inspector
     public Animator portalAnimator; // Assign in Inspector
     public Transform teleportDestination; // Set where the player should go
-    private GameManager gameManager;
+    private NewGameManager gameManager;
 
     private void Start()
     {
-        gameManager = GameManager.Instance;
+        gameManager = NewGameManager.Instance;
         if (gameManager == null)
         {
             Debug.LogError("GameManager instance not found!");

@@ -1,19 +1,20 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+//using UnityEngine.UIElements;
 
 public class Key : MonoBehaviour
 {
     public string keyID; // Unique ID for each key
 
-    private Label keyText;
+    public TextMeshProUGUI keyText;
 
     private void Start()
     {
         // Get the UI Document and reference the KeyText label
-        UIDocument uiDocument = FindObjectOfType<UIDocument>();
-        if (uiDocument != null)
+        
+        if (keyText != null)
         {
-            keyText = uiDocument.rootVisualElement.Q<Label>("Keytext"); // Match UI Builder ID
+            //keyText = uiDocument.rootVisualElement.Q<Label>("Keytext"); // Match UI Builder ID
             UpdateKeyUI();
         }
     }

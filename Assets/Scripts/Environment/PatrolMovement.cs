@@ -83,7 +83,7 @@ public class PatrolMovement : MonoBehaviour
     public float speed = 2f;
 
     private int direction = 1; // 1 for right, -1 for left
-    private Transform playerTransform; // Store the player reference
+    //private Transform playerTransform; // Store the player reference
 
     void Update()
     {
@@ -101,25 +101,5 @@ public class PatrolMovement : MonoBehaviour
         // Keep the object at the specified height
         transform.position = new Vector3(transform.position.x, height, transform.position.z);
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            playerTransform = collision.transform; // Store reference to player
-            playerTransform.SetParent(transform); // Attach player to platform
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            if (playerTransform == collision.transform) // Ensure it's the right player
-            {
-                playerTransform.SetParent(null); // Detach player
-                playerTransform = null; // Clear reference
-            }
-        }
-    }
+   
 }
