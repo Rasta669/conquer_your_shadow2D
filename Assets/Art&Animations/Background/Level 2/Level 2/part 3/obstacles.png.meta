@@ -168,12 +168,12 @@ TextureImporter:
       name: obstacles_0
       rect:
         serializedVersion: 2
-        x: 44
-        y: 184
-        width: 24
-        height: 8
+        x: 22
+        y: 0
+        width: 205
+        height: 196
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -195,7 +195,7 @@ TextureImporter:
         width: 48
         height: 51
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -217,7 +217,7 @@ TextureImporter:
         width: 41
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -239,7 +239,7 @@ TextureImporter:
         width: 24
         height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -261,7 +261,7 @@ TextureImporter:
         width: 59
         height: 106
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -283,7 +283,7 @@ TextureImporter:
         width: 49
         height: 17
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -305,7 +305,7 @@ TextureImporter:
         width: 56
         height: 46
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -327,7 +327,7 @@ TextureImporter:
         width: 141
         height: 114
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -349,7 +349,7 @@ TextureImporter:
         width: 64
         height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -371,7 +371,7 @@ TextureImporter:
         width: 46
         height: 17
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -393,7 +393,7 @@ TextureImporter:
         width: 16
         height: 65
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -415,7 +415,7 @@ TextureImporter:
         width: 111
         height: 85
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -437,7 +437,7 @@ TextureImporter:
         width: 22
         height: 84
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -459,7 +459,7 @@ TextureImporter:
         width: 24
         height: 93
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -476,7 +476,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 6e8e5bf904c67b746986cb5826708df0
     internalID: 0
     vertices: []
     indices: 
@@ -485,7 +485,21 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      obstacles_0: 4092514144187842027
+      obstacles_1: -675650125194207516
+      obstacles_10: -1974018022727384677
+      obstacles_11: 8482551847572481461
+      obstacles_12: 5732949773794676079
+      obstacles_13: 7190314693428468679
+      obstacles_2: -9187242211370392559
+      obstacles_3: 8248780198173348339
+      obstacles_4: 6555408642238913036
+      obstacles_5: -3962669069406873990
+      obstacles_6: -8060193561349919720
+      obstacles_7: -1050014950639799230
+      obstacles_8: -8172574077901175512
+      obstacles_9: 5119320867218476561
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

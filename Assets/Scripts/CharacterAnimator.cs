@@ -119,6 +119,11 @@ public class CharacterAnimator : MonoBehaviour
     {
         animator.SetTrigger("Idle");
     }
+    
+    public void PlayHurtAnimation()
+    {
+        animator.SetTrigger("Idle");
+    }
 
 
 }

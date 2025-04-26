@@ -1,0 +1,897 @@
+fileFormatVersion: 2
+guid: 3104e8a71e6b6854e878077c1b107878
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 45605608737525050
+    second: level 3 part 1.1 viewport render0105_0
+  - first:
+      213: -500770545157891275
+    second: level 3 part 1.1 viewport render0105_1
+  - first:
+      213: -8086096945171586356
+    second: level 3 part 1.1 viewport render0105_2
+  - first:
+      213: -8229092651986939026
+    second: level 3 part 1.1 viewport render0105_3
+  - first:
+      213: -5656250966786245453
+    second: level 3 part 1.1 viewport render0105_4
+  - first:
+      213: -8337474834627472424
+    second: level 3 part 1.1 viewport render0105_5
+  - first:
+      213: 8091744703485466674
+    second: level 3 part 1.1 viewport render0105_6
+  - first:
+      213: -6855078434433178439
+    second: level 3 part 1.1 viewport render0105_7
+  - first:
+      213: 2171823381451551090
+    second: level 3 part 1.1 viewport render0105_8
+  - first:
+      213: -5409960195884356865
+    second: level 3 part 1.1 viewport render0105_9
+  - first:
+      213: 2566963264095792434
+    second: level 3 part 1.1 viewport render0105_10
+  - first:
+      213: 2144158670257045690
+    second: level 3 part 1.1 viewport render0105_11
+  - first:
+      213: 5057252013252556590
+    second: level 3 part 1.1 viewport render0105_12
+  - first:
+      213: 5151205704086241088
+    second: level 3 part 1.1 viewport render0105_13
+  - first:
+      213: -1438392290553915624
+    second: level 3 part 1.1 viewport render0105_14
+  - first:
+      213: -6876242983541698987
+    second: level 3 part 1.1 viewport render0105_15
+  - first:
+      213: -6286270115700771666
+    second: level 3 part 1.1 viewport render0105_16
+  - first:
+      213: 3067577355578893146
+    second: level 3 part 1.1 viewport render0105_17
+  - first:
+      213: -4894451685660156318
+    second: level 3 part 1.1 viewport render0105_18
+  - first:
+      213: 6195690817875338901
+    second: level 3 part 1.1 viewport render0105_19
+  - first:
+      213: 7262695511356185267
+    second: level 3 part 1.1 viewport render0105_20
+  - first:
+      213: -1057605064392995630
+    second: level 3 part 1.1 viewport render0105_21
+  - first:
+      213: -609189777933252884
+    second: level 3 part 1.1 viewport render0105_22
+  - first:
+      213: -4622261494080025841
+    second: level 3 part 1.1 viewport render0105_23
+  - first:
+      213: -3125017150990841428
+    second: level 3 part 1.1 viewport render0105_24
+  - first:
+      213: 98297515199550767
+    second: level 3 part 1.1 viewport render0105_25
+  - first:
+      213: 4963876249145663968
+    second: level 3 part 1.1 viewport render0105_26
+  - first:
+      213: 5652580059243165167
+    second: level 3 part 1.1 viewport render0105_27
+  - first:
+      213: 7347237476401676892
+    second: level 3 part 1.1 viewport render0105_28
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3dc09c3f0602a000800000000000000
+      internalID: 45605608737525050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_1
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 341
+        width: 19
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53b92e5a7d7ec09f0800000000000000
+      internalID: -500770545157891275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_2
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 354
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc22dab9ba968cf80800000000000000
+      internalID: -8086096945171586356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_3
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 347
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e639a8625d36ccd80800000000000000
+      internalID: -8229092651986939026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_4
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 335
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bcfe3cb6b5f081b0800000000000000
+      internalID: -5656250966786245453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_5
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 347
+        width: 34
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d3554ecfc65b4c80800000000000000
+      internalID: -8337474834627472424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_6
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 348
+        width: 22
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23856689fe6ab4070800000000000000
+      internalID: 8091744703485466674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_7
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 348
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b46b20db7eddd0a0800000000000000
+      internalID: -6855078434433178439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_8
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 323
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 271be4ecbddd32e10800000000000000
+      internalID: 2171823381451551090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_9
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 334
+        width: 43
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffa6f437dd5fbe4b0800000000000000
+      internalID: -5409960195884356865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_10
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 354
+        width: 13
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23d28e30d7faf9320800000000000000
+      internalID: 2566963264095792434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_11
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 351
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab0ceba43f491cd10800000000000000
+      internalID: 2144158670257045690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_12
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 325
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e273c8d59e7fe2640800000000000000
+      internalID: 5057252013252556590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_13
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 335
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04fb60dab42cc7740800000000000000
+      internalID: 5151205704086241088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_14
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 340
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8179fd925ddc90ce0800000000000000
+      internalID: -1438392290553915624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_15
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 334
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55e89b8307da290a0800000000000000
+      internalID: -6876242983541698987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_16
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 326
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea47087c2aea2c8a0800000000000000
+      internalID: -6286270115700771666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_17
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 310
+        width: 30
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a53ef482a59329a20800000000000000
+      internalID: 3067577355578893146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_18
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 324
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26e1ae1bf1a631cb0800000000000000
+      internalID: -4894451685660156318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_19
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 320
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 596eb9109f38bf550800000000000000
+      internalID: 6195690817875338901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_20
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 310
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ba953296174ac460800000000000000
+      internalID: 7262695511356185267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_21
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 296
+        width: 25
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dc83302cc1a251f0800000000000000
+      internalID: -1057605064392995630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_22
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 306
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce64d75ef19bb87f0800000000000000
+      internalID: -609189777933252884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_23
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 301
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0bc46239ad6adfb0800000000000000
+      internalID: -4622261494080025841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_24
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 311
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca9003e4575b1a4d0800000000000000
+      internalID: -3125017150990841428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_25
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 309
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f25d5cbb1193d5100800000000000000
+      internalID: 98297515199550767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_26
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 302
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e1635b162b33e440800000000000000
+      internalID: 4963876249145663968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_27
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 64
+        width: 200
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe535af7d9ff17e40800000000000000
+      internalID: 5652580059243165167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: level 3 part 1.1 viewport render0105_28
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 43
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c520c55be81a6f560800000000000000
+      internalID: 7347237476401676892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 80e68cf50d8c6124fb330fb74dcef301
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      level 3 part 1.1 viewport render0105_0: 45605608737525050
+      level 3 part 1.1 viewport render0105_1: -500770545157891275
+      level 3 part 1.1 viewport render0105_10: 2566963264095792434
+      level 3 part 1.1 viewport render0105_11: 2144158670257045690
+      level 3 part 1.1 viewport render0105_12: 5057252013252556590
+      level 3 part 1.1 viewport render0105_13: 5151205704086241088
+      level 3 part 1.1 viewport render0105_14: -1438392290553915624
+      level 3 part 1.1 viewport render0105_15: -6876242983541698987
+      level 3 part 1.1 viewport render0105_16: -6286270115700771666
+      level 3 part 1.1 viewport render0105_17: 3067577355578893146
+      level 3 part 1.1 viewport render0105_18: -4894451685660156318
+      level 3 part 1.1 viewport render0105_19: 6195690817875338901
+      level 3 part 1.1 viewport render0105_2: -8086096945171586356
+      level 3 part 1.1 viewport render0105_20: 7262695511356185267
+      level 3 part 1.1 viewport render0105_21: -1057605064392995630
+      level 3 part 1.1 viewport render0105_22: -609189777933252884
+      level 3 part 1.1 viewport render0105_23: -4622261494080025841
+      level 3 part 1.1 viewport render0105_24: -3125017150990841428
+      level 3 part 1.1 viewport render0105_25: 98297515199550767
+      level 3 part 1.1 viewport render0105_26: 4963876249145663968
+      level 3 part 1.1 viewport render0105_27: 5652580059243165167
+      level 3 part 1.1 viewport render0105_28: 7347237476401676892
+      level 3 part 1.1 viewport render0105_3: -8229092651986939026
+      level 3 part 1.1 viewport render0105_4: -5656250966786245453
+      level 3 part 1.1 viewport render0105_5: -8337474834627472424
+      level 3 part 1.1 viewport render0105_6: 8091744703485466674
+      level 3 part 1.1 viewport render0105_7: -6855078434433178439
+      level 3 part 1.1 viewport render0105_8: 2171823381451551090
+      level 3 part 1.1 viewport render0105_9: -5409960195884356865
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

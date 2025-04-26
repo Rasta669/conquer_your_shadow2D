@@ -4696,13 +4696,24 @@ MonoBehaviour:
   gameOverBackButton: {fileID: 3410700310503174620}
   connectButton: {fileID: 858049365011369194}
   disconnectButton: {fileID: 6053963518904796466}
+  nextLevelButton: {fileID: 0}
   gameOverScoreOrTimeLabel: {fileID: 7827322811536051274}
   connectedLabel: {fileID: 5063950858437941358}
   addressLabel: {fileID: 6336611812592727035}
   ethBalanceLabel: {fileID: 2145168368110570082}
+  heartImages: []
   <ClaimTokenAmount>k__BackingField: 1000000000000000000
-  <ClaimTokenContractAddress>k__BackingField: 
-  <ClaimedTokenBalanceText>k__BackingField: {fileID: 0}
+  <ClaimTokenContractAddress>k__BackingField: 0x129479105a5b68B17047588BeC1a3CC1521ce6E3
+  <ClaimedTokenBalanceText>k__BackingField: {fileID: 5890124534245459100}
+  <ClaimNftContractAddress>k__BackingField: 
+  <ClaimNftAmount>k__BackingField: 
+  <ClaimedNFTText>k__BackingField: {fileID: 0}
+  <NftDisplayCanvas>k__BackingField: {fileID: 0}
+  <NftDisplayPrefab>k__BackingField: {fileID: 0}
+  <NftDisplayParent>k__BackingField: {fileID: 0}
+  levelScenes: []
+  transitionCanvasGroup: {fileID: 0}
+  transitionDuration: 1
   ActiveChainId: 84532
   currentMode: 0
 --- !u!1 &7850517985349140310
